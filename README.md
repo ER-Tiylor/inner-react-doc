@@ -54,7 +54,7 @@ playground/
 
 ## Setup
 
-Install the dependencies:
+Install the dependencies（node >= 22.22.2）:
 
 ```bash
 npm install

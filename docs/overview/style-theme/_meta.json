@@ -1,0 +1,27 @@
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "说明总览"
+  },
+  {
+    "type": "file",
+    "name": "governance",
+    "label": "治理建议"
+  },
+  {
+    "type": "file",
+    "name": "checklist",
+    "label": "执行清单"
+  },
+  {
+    "type": "file",
+    "name": "issues",
+    "label": "现状问题盘点"
+  },
+  {
+    "type": "file",
+    "name": "antd6-theme-migration",
+    "label": "Ant Design 6 主题前瞻"
+  }
+]

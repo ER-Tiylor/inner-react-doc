@@ -30,6 +30,11 @@
     "label": "通用能力说明"
   },
   {
+    "type": "dir-section-header",
+    "name": "style-theme",
+    "label": "样式与主题治理"
+  },
+  {
     "type": "file",
     "name": "npm-package-candidates",
     "label": "NPM 包候选清单"
