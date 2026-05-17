@@ -23,5 +23,6 @@
   "engines": {
     "node": "22.22.3",
     "npm": "10.9.8"
-  }
+  },
+  "packageManager": "pnpm@11.1.2"
 }
