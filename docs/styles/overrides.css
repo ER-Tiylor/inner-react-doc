@@ -1,0 +1,17 @@
+.rp-nav .rp-nav-menu,
+.rp-nav .rp-nav-menu ul,
+.rp-nav .rp-nav-menu ol,
+.rp-nav .rp-nav-menu dl,
+.rp-nav-screen .rp-nav-screen-menu,
+.rp-nav-screen .rp-nav-screen-menu ul,
+.rp-nav-screen .rp-nav-screen-menu ol,
+.rp-nav-screen .rp-nav-screen-menu dl {
+  margin: 0;
+  padding-left: 0;
+}
+
+.rp-nav .rp-nav-menu li,
+.rp-nav-screen .rp-nav-screen-menu li {
+  margin: 0;
+  list-style: none;
+}
