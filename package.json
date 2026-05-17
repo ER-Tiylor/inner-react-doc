@@ -1,35 +1,21 @@
 {
-  "name": "inner-react-doc",
-  "version": "0.0.1",
-  "description": "A static site based on dumi",
-  "license": "MIT",
+  "name": "rspress-doc-template",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "build": "dumi build",
-    "dev": "dumi dev",
-    "prepare": "husky install && dumi setup",
-    "preview": "dumi preview",
-    "start": "npm run dev"
+    "build": "rspress build",
+    "dev": "rspress dev",
+    "preview": "rspress preview"
   },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
-  "lint-staged": {
-    "*.{md,json}": [
-      "prettier --write --no-error-on-unmatched-pattern"
-    ]
+  "dependencies": {
+    "@rspress/core": "^2.0.10"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.1.2",
-    "@commitlint/config-conventional": "^17.1.0",
-    "dumi": "^2.4.21",
-    "dumi-theme-antd-style": "^0.31.1",
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1"
-  },
-  "authors": [
-    "tiylor"
-  ]
+    "@types/node": "^22.8.1",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  }
 }

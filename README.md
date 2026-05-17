@@ -1,23 +1,29 @@
-# inner-react-doc
+# Rspress website
 
-A static site base on [dumi](https://d.umijs.org).
+## Setup
 
-## Development
+Install the dependencies:
 
 ```bash
-# install dependencies
-$ npm install
-
-# start dev server
-$ npm start
-
-# build docs
-$ npm run build
-
-# Locally preview the production build
-$ npm run preview
+npm install
 ```
 
-## LICENSE
+## Get started
 
-MIT
+Start the dev server:
+
+```bash
+npm run dev
+```
+
+Build the website for production:
+
+```bash
+npm run build
+```
+
+Preview the production build locally:
+
+```bash
+npm run preview
+```

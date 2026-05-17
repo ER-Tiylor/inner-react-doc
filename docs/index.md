@@ -1,34 +1,43 @@
-﻿---
-title: 首页
 ---
+pageType: home
 
-# BMS 组件文档中心
-
-这是 `BMS` 组件体系的统一文档站，主要承载三类内容：
-
-- 组件使用文档
-- 组件评估与治理文档
-- 后续 npm 包抽离与重构沉淀
-
-## 快速入口
-
-- [组件总览](/components)
-- [组件评估](/overview)
-- [组件治理](/governance)
-
-## 组件分类
-
-- 基础能力：权限、错误边界、底部操作栏、数值范围输入
-- 表单与上传：`ProForm`、附件上传、上传抽屉
-- 数据展示与选择：`ProTable`、远程搜索、树选择、PDF 预览
-- 布局与导航：页签、菜单、页头、缓存
-- 反馈与状态：确认框等轻量反馈组件
-- 业务组件：地址、合同、流程、日志、导入等业务能力组件
-
-## 推荐阅读顺序
-
-1. [组件总览](/components)
-2. [组件综合评估](/overview/component-summary)
-3. [组件严格复评](/overview/component-summary-strict)
-4. [未来优化建议](/overview/component-improvements)
-5. [npm 包候选清单](/governance/npm-package-candidates)
+hero:
+  name: My Site
+  text: A cool website!
+  tagline: This is the tagline
+  actions:
+    - theme: brand
+      text: Quick Start
+      link: /guide/start/introduction
+    - theme: alt
+      text: GitHub
+      link: https://github.com/web-infra-dev/rspress
+  image:
+    src: /rspress-icon.png
+    alt: Logo
+features:
+  - title: Blazing fast build speed
+    details: The core compilation module is based on the Rust front-end toolchain, providing a more ultimate development experience.
+    icon: 🏃🏻‍♀️
+    link: /guide/start/introduction
+  - title: Support for MDX content writing
+    details: MDX is a powerful way to write content, allowing you to use React components in Markdown.
+    icon: 📦
+    link: /guide/use-mdx/components
+  - title: Built-in full-text search
+    details: Automatically generates a full-text search index for you during construction, providing out-of-the-box full-text search capabilities.
+    icon: 🎨
+    link: https://rspress.rs/guide/advanced/custom-search
+  - title: AI-friendly
+    details: Generate llms.txt and Markdown files compliant with the llms.txt specification through SSG-MD, making it easier for large language models to understand and use your documentation.
+    icon: 🤖
+    link: https://rspress.rs/guide/basic/ssg-md
+  - title: Static site generation
+    details: In production, it automatically builds into static HTML files, which can be easily deployed anywhere.
+    icon: 🌈
+    link: https://rspress.rs/guide/basic/ssg
+  - title: Providing multiple custom capabilities
+    details: Through its extension mechanism, you can easily extend theme UI and build process.
+    icon: 🔥
+    link: https://rspress.rs/guide/basic/custom-theme
+---
