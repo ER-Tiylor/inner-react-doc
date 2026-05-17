@@ -9,7 +9,9 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "@rspress/core": "^2.0.10"
+    "@ant-design/icons": "^6.2.3",
+    "@rspress/core": "^2.0.10",
+    "antd": "^6.4.2"
   },
   "devDependencies": {
     "@types/node": "^22.8.1",

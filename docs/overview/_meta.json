@@ -1,22 +1,37 @@
 [
-    {
-        "type": "file",
-        "name": "component-summary",
-        "label": "组件总览评分"
-    },
-    {
-        "type": "file",
-        "name": "component-summary-strict",
-        "label": "组件严格版复评"
-    },
-    {
-        "type": "file",
-        "name": "component-improvements",
-        "label": "组件优化建议"
-    },
-    {
-        "type": "file",
-        "name": "npm-package-candidates",
-        "label": "NPM 包候选清单"
-    }
+  {
+    "type": "file",
+    "name": "component-summary",
+    "label": "组件总览评分"
+  },
+  {
+    "type": "file",
+    "name": "component-summary-strict",
+    "label": "组件严格版复评"
+  },
+  {
+    "type": "file",
+    "name": "component-improvements",
+    "label": "组件优化建议"
+  },
+  {
+    "type": "file",
+    "name": "react-19-upgrade",
+    "label": "React 19 升级事项"
+  },
+  {
+    "type": "file",
+    "name": "hooks-utils-governance",
+    "label": "Hooks 与 Utils 治理建议"
+  },
+  {
+    "type": "dir-section-header",
+    "name": "reusable-capabilities",
+    "label": "通用能力说明"
+  },
+  {
+    "type": "file",
+    "name": "npm-package-candidates",
+    "label": "NPM 包候选清单"
+  }
 ]

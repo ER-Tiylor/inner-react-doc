@@ -1,3 +1,5 @@
+import FormDigitRangePreview from '../../../playground/demos/form-digit-range/preview';
+
 # FormDigitRange 数值范围输入
 
 ## 介绍
@@ -7,6 +9,9 @@
 适用于表单中录入数值区间，例如重量范围、金额范围、数量范围等场景。
 
 ## 代码演示
+
+<FormDigitRangePreview />
+
 ```tsx
 import { useState } from 'react'
 import FormDigitRange from '@/components/FormDigitRange'
@@ -24,7 +29,6 @@ export default function Demo() {
   )
 }
 ```
-
 
 ## API
 ### Props
@@ -45,7 +49,6 @@ export default function Demo() {
 
 ### Children
 无
-
 ### Ref
 无
 
@@ -65,7 +68,6 @@ type FormDigitRangeProps = {
 ```
 
 组件会在失焦时做如下处理：
-
 ```ts
 1. 将输入值转成整数
 2. 按 `fieldProps.min` / `fieldProps.max` 截断
@@ -79,7 +81,6 @@ type FormDigitRangeProps = {
 组件基于两个 `InputNumber` 组合实现，基础键盘输入和焦点能力依赖底层组件；当前源码未增加额外无障碍属性。
 
 ## FAQ
-如果最小值输入得比最大值大，会怎样？
+如果最小值输入得比最大值大，会怎么样？
 
 组件会在失焦时自动交换两个值，保证返回结果始终符合最小值在前、最大值在后的顺序。
-

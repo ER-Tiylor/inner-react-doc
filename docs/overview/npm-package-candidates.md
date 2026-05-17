@@ -1,354 +1,316 @@
-﻿# NPM Package Candidates 适合抽离为 npm 包的组件候选清单
+# NPM 包治理与拆包建议
 
 ## 目标
-本文档用于回答一个务实问题：
 
-当前 `src/components` 里的哪些组件，适合从业务仓库中抽离出来，沉淀成独立 npm 包。
+这份文档回答三个问题：
 
-这里的判断标准不是“这个组件好不好用”，而是：
+1. BMS 当前哪些能力值得抽离为内部 npm 包
+2. `src/antd` 这一层是否应该整体发布
+3. 基础组件、Pro 组件、业务组件应该如何分层治理
 
-1. 是否通用
-2. 是否低业务耦合
-3. 是否修改频率低
-4. 是否值得为跨项目复用付出维护成本
+## 结论先行
 
-## 判断标准
-满足以下条件越多，越适合抽离：
+- 不建议把 `src/antd` 整个目录原样发布成一个 npm 包
+- 建议从 `src/antd` 中筛出真正承载统一交互协议的基础控件，形成基础包
+- `ProForm`、`ProTable` 这类高阶基础设施应单独治理，不和基础控件混成一个包
+- 业务组件继续留在业务仓库
 
-- UI 或交互能力通用
-- 不依赖当前项目的 store / router / 权限体系 / 业务接口
-- 对外 API 已相对稳定
-- 组件本身复用价值高
-- 后续不会频繁被单项目业务改坏
+## 建议的四层结构
 
-不适合抽离的常见特征：
+### 第一层：基础适配层
 
-- 强依赖当前项目接口字段
-- 强依赖当前项目路由、布局、用户态
-- 更像业务流程组件，而不是通用组件
-- 抽出去以后仍要保留大量项目特定代码
+定位：基于 `antd` 的统一控件层，承载输入、只读、空值展示等约定。
 
-## 总体建议
-建议分三类看：
+适合纳入：
 
-### A 类：适合优先抽离
-可以作为第一批 npm 包候选。
-
-### B 类：建议重构后再抽离
-组件有价值，但当前耦合或协议还不够收敛。
-
-### C 类：不建议抽离
-更适合继续留在业务仓库内维护。
-
-## A 类：适合优先抽离
-| 组件 | 推荐级别 | 抽离难度 | 原因 |
-| --- | --- | --- | --- |
-| `Auth` | 高 | 低 | 功能简单、边界清楚、依赖少，适合做权限渲染小组件 |
-| `ErrorBoundary` | 高 | 低 | 通用 React 容错组件，业务耦合很低 |
-| `FooterButton` | 中 | 低 | 底部操作栏容器，结构简单，适合做布局组件 |
-| `FormDigitRange` | 高 | 低 | 标准表单范围输入控件，通用性较强 |
-| `SearchInput` | 高 | 中 | 高频远程搜索选择器，复用价值高 |
-| `SearchTree` | 高 | 中 | 通用树筛选组件，业务上下文依赖较少 |
-
-### A 类逐项说明
-#### `Auth`
-适合原因：
-
-- 逻辑极简
-- 组件边界清晰
-- 可封装成更通用的权限渲染器
-
-抽离前建议：
-
-- 去掉对当前 `useUserStore` 的直接依赖
-- 改成外部传入 `permissions` 或由 `Provider` 注入
-
-更适合的抽包形态：
-
-```ts
-<Auth authCode="xxx" permissions={permissions}>
-  {children}
-</Auth>
-```
-
-#### `ErrorBoundary`
-适合原因：
-
-- 是标准 React 能力封装
-- 跨项目可复用
-- 改动频率通常很低
-
-抽离前建议：
-
-- 把错误页文案、图标、按钮行为改成可配置
-
-#### `FooterButton`
-适合原因：
-
-- 纯布局组件
-- 没有业务耦合
-- 抽出去维护成本极低
-
-注意：
-
-- 这类组件价值不算大，但如果你希望 npm 包里有一组基础布局件，它是合格的
-
-#### `FormDigitRange`
-适合原因：
-
-- 是比较标准的表单子控件
-- 不依赖业务上下文
-- 行为稳定、容易测试
-
-抽离前建议：
-
-- 补齐更严格的 `value` 类型
-- 明确 `min/max` 和空值行为
-
-#### `SearchInput`
-适合原因：
-
-- 高频场景组件
-- 远程搜索选择几乎所有中后台项目都会需要
-- 抽离后复用收益高
-
-抽离前必须做的事：
-
-- 去掉当前对固定请求协议的隐式假设
-- 不要默认写死 `name` 作为搜索字段
-- 统一 `valueKey / labelKey / keywordKey / request`
-
-建议抽离后的 API：
-
-```ts
-type RemoteSelectProps<T> = {
-  request: (keyword: string, extra?: any) => Promise<T[]>
-  valueKey?: keyof T
-  labelKey?: keyof T
-  keywordKey?: string
-  value?: any
-  onChange?: (value: any, option: T | T[]) => void
-}
-```
-
-#### `SearchTree`
-适合原因：
-
-- 树选择 + 搜索高亮是稳定需求
-- 结构相对清晰
-- 能力边界比较容易定义
-
-抽离前建议：
-
-- 支持本地数据和远程数据两套正式模式
-- 明确父节点是否可选、默认展开、默认选中等配置
-
-## B 类：建议重构后再抽离
-| 组件 | 推荐级别 | 抽离难度 | 当前问题 |
-| --- | --- | --- | --- |
-| `PDFViewer` | 中 | 中 | 依赖运行时外链脚本，内部实现还不够稳定 |
-| `FormUpload` | 高 | 中 | 能力强，但上传逻辑和预览逻辑还没抽干净 |
-| `UploadDrawer` | 中 | 中 | 和 `FormUpload` 重复能力较多 |
-| `ProForm` | 高 | 高 | 很有价值，但普通表单和卡片表单配置结构还未统一 |
-| `ProTable` | 高 | 高 | 最值得沉淀，但也是当前耦合最复杂的核心组件 |
-
-### B 类逐项说明
-#### `PDFViewer`
-为什么不是 A 类：
-
-- 功能通用，但当前实现依赖动态加载外部 `pdf.js`
-- 内部状态和渲染逻辑还偏页面型实现
-
-建议重构方向：
-
-- 固定依赖方式，不要运行时注入脚本
-- 明确预览失败、加载中、翻页控制等状态协议
-
-#### `FormUpload`
-为什么值得抽：
-
-- 附件上传是高频公共能力
-- 支持模板下载、回显、预览、私有/公共文件等功能，价值很高
-
-为什么不能直接抽：
-
-- 当前接口协议、预览逻辑、上传地址获取逻辑耦合在一起
-
-建议重构方向：
-
-- 先抽公共上传 hook
-- 统一文件值结构
-- 再做 UI 组件层
-
-#### `UploadDrawer`
-为什么不建议单独先抽：
-
-- 它本质上是 `FormUpload` 的抽屉形态变体
-- 单独抽只会把重复逻辑一起搬出去
-
-更合理的方式：
-
-- 先抽上传核心
-- 再让 `FormUpload` / `UploadDrawer` 复用同一底层能力
-
-#### `ProForm`
-为什么值得抽：
-
-- 表单基础设施价值高
-- 配置驱动模式跨项目复用潜力强
-
-为什么不能直接抽：
-
-- `ProForm` 和 `ProFormCard` 是两套结构
-- `viewMode` 能力依赖外部业务输入组件共同遵守约定
-
-建议重构方向：
-
-- 统一字段协议
-- 明确内建字段类型和自定义字段边界
-- 给查看模式形成正式规范
-
-#### `ProTable`
-为什么最值得抽：
-
-- 列表页是中后台项目最核心的基础设施之一
-- 当前组件已经有较强雏形
-
-为什么最难抽：
-
-- 耦合了搜索表单、表格、树筛选、状态 Tabs、页配置、字段权限、导出、汇总等多种能力
-- 一部分能力明显带有项目上下文
-
-建议重构方向：
-
-- 先定义“核心版 ProTable”
-- 把权限、页配置、树筛选做成可插拔能力
-- 把返回值结构、搜索字段协议、工具栏协议都收敛稳定
-
-## C 类：不建议抽离
-| 组件 | 原因 |
-| --- | --- |
-| `Address` | 强依赖项目 store、接口和地址数据结构 |
-| `Contract` | 明显是业务选择器，不是通用组件 |
-| `FlowModal` | 业务审批展示组件，复用范围窄 |
-| `ImportModal` | 业务导入流程组件，协议偏项目化 |
-| `LogModal` | 日志业务弹窗，通用性有限 |
-| `NavHeader` | 强依赖用户态、主题、路由、登出逻辑 |
-| `NavFooter` | 抽离价值低 |
-| `PageTabs` | 强依赖路由和缓存策略，应用壳属性太强 |
-| `SideMenu` | 强依赖路由菜单树和权限体系 |
-| `KeepAlive` | 虽然能力有价值，但当前实现仍强依赖应用标签页和路由语义 |
-| `ConfimModal` | 抽象层次过浅，且当前定制度不足 |
-| `SearchTable` | 当前实现过薄，不适合抽包 |
-
-## 推荐抽离顺序
-如果你准备逐步推进，建议按这个顺序：
-
-### 第一批
-1. `Auth`
-2. `ErrorBoundary`
-3. `FormDigitRange`
-4. `FooterButton`
-5. `SearchTree`
-6. `SearchInput`
-
-特点：
-
-- 风险低
-- 成本低
-- 容易形成稳定 API
-- 适合先建立 npm 包发布流程
-
-### 第二批
-1. `PDFViewer`
-2. `FormUpload`
-3. `UploadDrawer`
-
-特点：
-
-- 价值高
-- 需要先做一轮公共能力收敛
-
-### 第三批
-1. `ProForm`
-2. `ProTable`
-
-特点：
-
-- 收益最大
-- 也是最需要谨慎设计的一批
-- 更适合作为“组件平台能力”逐步建设，而不是一次性搬迁
-
-## 抽离前置检查清单
-每个组件在抽成 npm 包前，建议至少过一遍这份检查清单：
-
-### 1. 依赖清理
-- 是否依赖当前项目的 `request`
-- 是否依赖当前项目的 `store`
-- 是否依赖当前项目的 `router`
-- 是否依赖当前项目的 `utils`
-- 是否依赖当前项目的样式变量
-
-### 2. API 稳定性
-- props 命名是否统一
-- 回调参数是否明确
-- 返回值类型是否稳定
-- 是否存在大量 `any`
-
-### 3. 复用边界
-- 这个组件在其他项目里是否仍然成立
-- 是否只是“当前页面里顺手抽了一个组件”
-- 是否有足够多的可复用场景支撑维护成本
-
-### 4. 文档与测试
-- 是否有 README
-- 是否有基础用法示例
-- 是否有最小测试覆盖
-
-## 最务实的结论
-如果你的目标是“把修改频率低、通用度高的组件先独立出去”，我建议最终这样落：
-
-### 可以直接进入 npm 包候选池
-- `Auth`
-- `ErrorBoundary`
-- `FooterButton`
+- `Input`
+- `Select`
+- `DatePicker`
+- `InputNumber`
+- `InputTextArea`
+- `Checkbox`
+- `Radio`
+- `Switch`
+- `Row`
+- `Col`
 - `FormDigitRange`
+
+### 第二层：高阶 Pro 组件层
+
+定位：面向中后台页面开发的基础设施。
+
+适合纳入：
+
+- `ProForm`
+- `ProFormCard`
+- `ProTable`
 - `SearchInput`
 - `SearchTree`
 
-### 先做一次重构，再进入候选池
-- `PDFViewer`
+### 第三层：通用业务能力层
+
+定位：仍有复用价值，但已带有明显业务语义。
+
+可继续观察：
+
 - `FormUpload`
 - `UploadDrawer`
-- `ProForm`
-- `ProTable`
+- `PDFViewer`
+- `Auth`
+- `ErrorBoundary`
 
-### 继续留在业务仓库
+### 第四层：应用壳与业务流程层
+
+定位：强依赖当前应用上下文，不适合优先包化。
+
+代表内容：
+
+- `KeepAlive`
+- `PageTabs`
+- `SideMenu`
+- `NavHeader`
+- `NavFooter`
 - `Address`
 - `Contract`
 - `FlowModal`
 - `ImportModal`
 - `LogModal`
-- `NavHeader`
-- `NavFooter`
-- `PageTabs`
-- `SideMenu`
-- `KeepAlive`
-- `ConfimModal`
-- `SearchTable`
 
-## 一句话建议
-第一步不要急着抽最复杂、最有名的组件，先抽：
+## 对 `src/antd` 的判断
 
-- 小而稳
-- 通用
-- API 好收敛
+### 不建议整体发布
 
-等 npm 包体系和发布节奏成熟后，再处理：
+因为其中很多组件只是对 `antd` 的薄封装，例如：
 
-- `FormUpload`
-- `ProForm`
-- `ProTable`
+- `Form`
+- `Table`
+- `Modal`
+- `Upload`
+- `Drawer`
+- `Tabs`
+- `Layout`
+- `ConfigProvider`
 
-这种真正有平台价值、但也最难做好的组件。
+这类内容发成包价值不高，但会增加同步 `antd` 版本的维护成本。
 
+### 适合筛出进入基础包的部分
+
+这类组件已经不只是 re-export，而是在承载统一协议：
+
+- `Input`
+- `Select`
+- `DatePicker`
+- `InputNumber`
+- `InputTextArea`
+- `Checkbox`
+- `Radio`
+- `Switch`
+- `Row`
+- `Col`
+- `FormDigitRange`
+- `const.ts` 中的空值展示常量
+- 公共只读展示样式
+
+共同特征：
+
+- 有统一 placeholder
+- 有 `viewMode` 只读展示协议
+- 有统一空值展示，例如 `--`
+- 服务的是整套表单展示体验
+
+## 建议包名
+
+### 基础控件包
+
+候选包名：
+
+- `@company/ui-base`
+- `@company/form-controls`
+- `@company/antd-adapter`
+
+建议优先：`@company/ui-base`
+
+### 表单基础设施包
+
+- `@company/pro-form`
+- `@company/form-engine`
+
+建议优先：`@company/pro-form`
+
+### 表格基础设施包
+
+- `@company/pro-table`
+- `@company/table-engine`
+
+建议优先：`@company/pro-table`
+
+### 轻量公共组件包
+
+- `@company/ui-kit`
+- `@company/common-components`
+
+建议优先：`@company/ui-kit`
+
+## 推荐的仓库结构草案
+
+### 方案 A：按包拆分
+
+```txt
+packages/
+  ui-base/
+  pro-form/
+  pro-table/
+  ui-kit/
+apps/
+  docs/
+```
+
+### 方案 B：先做过渡
+
+```txt
+packages/
+  ui-base/
+  pro-components/
+apps/
+  docs/
+```
+
+这个方案更适合 BMS 当前阶段：
+
+- `ui-base` 先承接 `src/antd` 中真正有协议价值的基础控件
+- `pro-components` 先承接 `ProForm`、`ProTable` 和相关搜索组件
+- 等协议稳定后再拆细
+
+## 每个包的建议目录
+
+### `@company/ui-base`
+
+```txt
+packages/ui-base/
+  src/
+    components/
+      Input/
+      Select/
+      DatePicker/
+      InputNumber/
+      InputTextArea/
+      Checkbox/
+      Radio/
+      Switch/
+      Row/
+      Col/
+      FormDigitRange/
+    constants/
+      empty.ts
+    styles/
+      view-mode.css
+    types/
+    index.ts
+  package.json
+  tsconfig.json
+  README.md
+```
+
+### `@company/pro-form`
+
+```txt
+packages/pro-form/
+  src/
+    ProForm/
+    ProFormCard/
+    field-types/
+    hooks/
+    types/
+    index.ts
+  package.json
+  tsconfig.json
+  README.md
+```
+
+### `@company/pro-table`
+
+```txt
+packages/pro-table/
+  src/
+    ProTable/
+    SearchForm/
+    SearchTree/
+    SearchInput/
+    toolbar/
+    adapters/
+    types/
+    index.ts
+  package.json
+  tsconfig.json
+  README.md
+```
+
+### `@company/ui-kit`
+
+```txt
+packages/ui-kit/
+  src/
+    Auth/
+    ErrorBoundary/
+    FooterButton/
+    index.ts
+  package.json
+  tsconfig.json
+  README.md
+```
+
+## 包之间的依赖方向
+
+建议保持单向：
+
+```txt
+ui-base
+  ↑
+pro-form
+  ↑
+pro-table
+
+ui-kit
+  ↑
+业务应用
+```
+
+## 抽包前的统一检查清单
+
+### 1. 依赖清理
+
+- 是否依赖当前项目的 `request`
+- 是否依赖当前项目的 `store`
+- 是否依赖当前项目的 `router`
+- 是否依赖当前项目的全局主题或样式变量
+- 是否依赖当前项目特有的字段结构
+
+### 2. 协议收敛
+
+- props 命名是否统一
+- 回调参数是否稳定
+- 返回值结构是否可预测
+- 是否仍存在大量 `any`
+- 是否存在多个历史模式并存
+
+### 3. 复用边界
+
+- 它在其他子应用里是否仍然成立
+- 它是“平台能力”还是“页面顺手抽出来的局部组件”
+- 是否有足够的复用收益覆盖维护成本
+
+### 4. 文档与测试
+
+- 是否有 README
+- 是否有最小示例
+- 是否有行为测试或最小交互验证
+- 是否能在文档站中独立演示
+
+## 最终建议
+
+当前最务实的路线不是“把 BMS 公共组件整体搬成 npm 包”，而是：
+
+1. 先建立一层小而稳的基础控件包
+2. 再治理轻量公共组件
+3. 最后单独推进 `ProForm`、`ProTable` 这类高阶基础设施
+4. 业务组件继续留在业务仓库内收敛

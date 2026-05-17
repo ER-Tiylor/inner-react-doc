@@ -1,0 +1,6 @@
+<svg width="146" height="28" viewBox="0 0 146 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="28" height="28" rx="8" fill="#0F172A"/>
+  <path d="M8 7.5H14.8C19 7.5 21.4 9.8 21.4 13.8C21.4 17.8 19 20.1 14.8 20.1H11V24H8V7.5ZM11 17.1H14.4C16.7 17.1 18.2 16 18.2 13.8C18.2 11.6 16.7 10.5 14.4 10.5H11V17.1Z" fill="#F8FAFC"/>
+  <text x="39" y="13" fill="#0F172A" font-size="11" font-family="Arial, sans-serif" font-weight="700" letter-spacing="0.2">React</text>
+  <text x="39" y="22" fill="#64748B" font-size="10" font-family="Arial, sans-serif" font-weight="600" letter-spacing="0.2">Internal Docs</text>
+</svg>

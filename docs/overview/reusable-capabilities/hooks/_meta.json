@@ -1,0 +1,17 @@
+[
+  {
+    "type": "file",
+    "name": "use-query-params",
+    "label": "useQueryParams"
+  },
+  {
+    "type": "file",
+    "name": "use-data-dict",
+    "label": "useDataDict"
+  },
+  {
+    "type": "file",
+    "name": "use-goods-owner",
+    "label": "useGoodsOwner"
+  }
+]

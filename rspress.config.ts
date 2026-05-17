@@ -3,12 +3,12 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   root: path.join(__dirname, 'docs'),
-  title: 'React 组件文档',
+  title: '组件文档',
   description: '通用 React 组件文档站点',
   icon: '/site-icon.svg',
   logo: {
-    light: '/site-logo.svg',
-    dark: '/site-logo.svg',
+    light: '/site-nav-logo.svg',
+    dark: '/site-nav-logo.svg',
   },
   themeConfig: {
     socialLinks: [

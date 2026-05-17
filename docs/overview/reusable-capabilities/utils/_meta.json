@@ -1,0 +1,17 @@
+[
+  {
+    "type": "file",
+    "name": "storage",
+    "label": "storage"
+  },
+  {
+    "type": "file",
+    "name": "dict",
+    "label": "dict"
+  },
+  {
+    "type": "file",
+    "name": "permission",
+    "label": "permission"
+  }
+]
