@@ -1,0 +1,9 @@
+[
+  { "type": "file", "name": "pro-form", "label": "ProForm 业务表单" },
+  { "type": "file", "name": "form-upload", "label": "FormUpload 表单上传" },
+  { "type": "file", "name": "search-input", "label": "SearchInput 远程搜索" },
+  { "type": "file", "name": "address", "label": "Address 地址选择" },
+  { "type": "file", "name": "contract", "label": "Contract 合同选择" },
+  { "type": "file", "name": "edit-table", "label": "EditTable 可编辑表格" },
+  { "type": "file", "name": "search-table", "label": "SearchTable 搜索表格" }
+]

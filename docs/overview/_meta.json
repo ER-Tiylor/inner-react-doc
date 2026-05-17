@@ -1,0 +1,22 @@
+[
+    {
+        "type": "file",
+        "name": "component-summary",
+        "label": "组件总览评分"
+    },
+    {
+        "type": "file",
+        "name": "component-summary-strict",
+        "label": "组件严格版复评"
+    },
+    {
+        "type": "file",
+        "name": "component-improvements",
+        "label": "组件优化建议"
+    },
+    {
+        "type": "file",
+        "name": "npm-package-candidates",
+        "label": "NPM 包候选清单"
+    }
+]

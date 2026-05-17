@@ -1,0 +1,8 @@
+[
+  { "type": "file", "name": "confim-modal", "label": "ConfimModal 确认弹窗" },
+  { "type": "file", "name": "flow-modal", "label": "FlowModal 审批流程弹窗" },
+  { "type": "file", "name": "import-modal", "label": "ImportModal 导入弹窗" },
+  { "type": "file", "name": "log-modal", "label": "LogModal 日志查看弹窗" },
+  { "type": "file", "name": "upload-drawer", "label": "UploadDrawer 附件上传抽屉" },
+  { "type": "file", "name": "pdf-viewer", "label": "PDFViewer PDF 预览" }
+]

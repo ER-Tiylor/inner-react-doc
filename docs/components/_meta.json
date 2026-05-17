@@ -1,0 +1,27 @@
+[
+  {
+    "type": "dir-section-header",
+    "name": "foundation",
+    "label": "基础能力"
+  },
+  {
+    "type": "dir-section-header",
+    "name": "forms",
+    "label": "表单与输入"
+  },
+  {
+    "type": "dir-section-header",
+    "name": "tables",
+    "label": "表格与筛选"
+  },
+  {
+    "type": "dir-section-header",
+    "name": "layout",
+    "label": "布局与导航"
+  },
+  {
+    "type": "dir-section-header",
+    "name": "feedback",
+    "label": "弹窗与预览"
+  }
+]

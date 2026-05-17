@@ -1,16 +1,16 @@
 [
   {
-    "text": "Guide",
-    "link": "/guide/start/introduction",
-    "activeMatch": "/guide/"
+    "text": "首页",
+    "link": "/"
   },
   {
-    "text": "API",
-    "link": "/api/",
-    "activeMatch": "/api/"
+    "text": "组件文档",
+    "link": "/components/",
+    "activeMatch": "/components/"
   },
   {
-    "text": "Document",
-    "link": "https://rspress.rs/"
+    "text": "治理规划",
+    "link": "/overview/component-improvements",
+    "activeMatch": "/overview/"
   }
 ]

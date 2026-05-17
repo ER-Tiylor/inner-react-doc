@@ -1,0 +1,4 @@
+[
+  { "type": "file", "name": "pro-table", "label": "ProTable 业务表格" },
+  { "type": "file", "name": "search-tree", "label": "SearchTree 树选择" }
+]

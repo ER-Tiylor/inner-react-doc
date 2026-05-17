@@ -1,0 +1,6 @@
+[
+  { "type": "file", "name": "auth", "label": "Auth 权限控制" },
+  { "type": "file", "name": "error-boundary", "label": "ErrorBoundary 错误边界" },
+  { "type": "file", "name": "footer-button", "label": "FooterButton 底部按钮" },
+  { "type": "file", "name": "form-digit-range", "label": "FormDigitRange 数值范围输入" }
+]

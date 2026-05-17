@@ -1,0 +1,7 @@
+[
+  { "type": "file", "name": "nav-header", "label": "NavHeader 顶部导航" },
+  { "type": "file", "name": "nav-footer", "label": "NavFooter 页脚" },
+  { "type": "file", "name": "side-menu", "label": "SideMenu 侧边菜单" },
+  { "type": "file", "name": "page-tabs", "label": "PageTabs 页面标签栏" },
+  { "type": "file", "name": "keep-alive", "label": "KeepAlive 页面缓存" }
+]
