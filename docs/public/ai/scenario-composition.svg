@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="735" viewBox="0 0 1100 735" role="img" aria-labelledby="title"><title id="title">场景组合地图 · 按需要选能力，不复制一套助手</title>
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L7 4L0 8" fill="none" stroke="#526581" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:system-ui,"Microsoft YaHei",sans-serif;fill:#24344b}.title{font-size:24px;font-weight:700}.head{font-size:19px;font-weight:650}.body{font-size:16px}.note{font-size:14px;fill:#526581}</style><rect width="1100" height="735" rx="16" fill="#f8fafc"/>
+<text x="30" y="44" class="title">场景组合地图 · 按需要选能力，不复制一套助手</text>
+<rect x="30" y="90" width="225" height="86" rx="12" fill="#eff6ff" stroke="#cbd5e1"/>
+<text x="48" y="122" class="head">当前页咨询</text>
+<path d="M255 133H290" fill="none" stroke="#526581" stroke-width="2" marker-end="url(#a)"/>
+<rect x="295" y="90" width="475" height="86" rx="12" fill="#f0fdfa" stroke="#cbd5e1"/>
+<text x="313" y="122" class="head">能力组合</text>
+<text x="313" y="154" class="body">只读目标 + 受控 context + 开窗</text>
+<path d="M770 133H805" fill="none" stroke="#526581" stroke-width="2" marker-end="url(#a)"/>
+<rect x="810" y="90" width="260" height="86" rx="12" fill="#fff7ed" stroke="#cbd5e1"/>
+<text x="828" y="122" class="head">结果边界</text>
+<text x="828" y="154" class="body">回答问题，不写表单</text>
+<rect x="30" y="200" width="225" height="86" rx="12" fill="#eff6ff" stroke="#cbd5e1"/>
+<text x="48" y="232" class="head">点击记录解读</text>
+<path d="M255 243H290" fill="none" stroke="#526581" stroke-width="2" marker-end="url(#a)"/>
+<rect x="295" y="200" width="475" height="86" rx="12" fill="#f0fdfa" stroke="#cbd5e1"/>
+<text x="313" y="232" class="head">能力组合</text>
+<text x="313" y="264" class="body">只读目标 + 新会话 + 数据快照 + 自动首句</text>
+<path d="M770 243H805" fill="none" stroke="#526581" stroke-width="2" marker-end="url(#a)"/>
+<rect x="810" y="200" width="260" height="86" rx="12" fill="#fff7ed" stroke="#cbd5e1"/>
+<text x="828" y="232" class="head">结果边界</text>
+<text x="828" y="264" class="body">解释已选业务记录</text>
+<rect x="30" y="310" width="225" height="86" rx="12" fill="#eff6ff" stroke="#cbd5e1"/>
+<text x="48" y="342" class="head">文字 / 附件填表</text>
+<path d="M255 353H290" fill="none" stroke="#526581" stroke-width="2" marker-end="url(#a)"/>
+<rect x="295" y="310" width="475" height="86" rx="12" fill="#f0fdfa" stroke="#cbd5e1"/>
+<text x="313" y="342" class="head">能力组合</text>
+<text x="313" y="374" class="body">可填目标 + 字段能力 + 候选与联动</text>
+<path d="M770 353H805" fill="none" stroke="#526581" stroke-width="2" marker-end="url(#a)"/>
+<rect x="810" y="310" width="260" height="86" rx="12" fill="#fff7ed" stroke="#cbd5e1"/>
+<text x="828" y="342" class="head">结果边界</text>
+<text x="828" y="374" class="body">预览 → 用户确认 → 写入</text>
+<rect x="30" y="420" width="225" height="86" rx="12" fill="#eff6ff" stroke="#cbd5e1"/>
+<text x="48" y="452" class="head">多来源一起填写</text>
+<path d="M255 463H290" fill="none" stroke="#526581" stroke-width="2" marker-end="url(#a)"/>
+<rect x="295" y="420" width="475" height="86" rx="12" fill="#f0fdfa" stroke="#cbd5e1"/>
+<text x="313" y="452" class="head">能力组合</text>
+<text x="313" y="484" class="body">表单 + 编辑表格 + 页面状态 → 一个目标</text>
+<path d="M770 463H805" fill="none" stroke="#526581" stroke-width="2" marker-end="url(#a)"/>
+<rect x="810" y="420" width="260" height="86" rx="12" fill="#fff7ed" stroke="#cbd5e1"/>
+<text x="828" y="452" class="head">结果边界</text>
+<text x="828" y="484" class="body">按字段归属写回各来源</text>
+<rect x="30" y="530" width="225" height="86" rx="12" fill="#eff6ff" stroke="#cbd5e1"/>
+<text x="48" y="562" class="head">解读后跨页填写</text>
+<path d="M255 573H290" fill="none" stroke="#526581" stroke-width="2" marker-end="url(#a)"/>
+<rect x="295" y="530" width="475" height="86" rx="12" fill="#f0fdfa" stroke="#cbd5e1"/>
+<text x="313" y="562" class="head">能力组合</text>
+<text x="313" y="594" class="body">会话快照 + 页面目录 + 等待目标 + 重读字段</text>
+<path d="M770 573H805" fill="none" stroke="#526581" stroke-width="2" marker-end="url(#a)"/>
+<rect x="810" y="530" width="260" height="86" rx="12" fill="#fff7ed" stroke="#cbd5e1"/>
+<text x="828" y="562" class="head">结果边界</text>
+<text x="828" y="594" class="body">在同一会话生成目标页预览</text>
+<text x="32" y="675" class="body">新场景：先确定数据来源、是否写入、是否新会话、是否自动发送、是否跨页。</text>
+<text x="32" y="706" class="note">组合能力不代表业务已接入；数据函数、目标字段与业务验收仍由页面提供。</text>
+</svg>

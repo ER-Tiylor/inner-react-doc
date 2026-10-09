@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="470" viewBox="0 0 1000 470" role="img" aria-labelledby="title">
+<title id="title">表单接入 · 多个数据来源，合成一个填写目标</title>
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L7 4L0 8" fill="none" stroke="#526581" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:system-ui,"Microsoft YaHei",sans-serif;fill:#24344b}.title{font-size:23px;font-weight:700}.head{font-size:18px;font-weight:650}.body{font-size:16px}.note{font-size:14px;fill:#526581}</style>
+<rect width="1000" height="470" rx="16" fill="#f8fafc"/>
+<text x="30" y="43" class="title">表单接入 · 多个数据来源，合成一个填写目标</text>
+<rect x="30" y="85" width="290" height="96" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
+<text x="46" y="114" class="head">表单 FormRefSource</text>
+<text x="46" y="141" class="body">formRef + groups</text>
+<path d="M175 181V213H500V245" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>
+<rect x="355" y="85" width="290" height="96" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
+<text x="371" y="114" class="head">编辑表格 TableSource</text>
+<text x="371" y="141" class="body">tableRef + columns + name</text>
+<path d="M500 181V213H500V245" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>
+<rect x="680" y="85" width="290" height="96" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
+<text x="696" y="114" class="head">页面状态 PageSource</text>
+<text x="696" y="141" class="body">read + write</text>
+<path d="M825 181V213H500V245" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>
+<rect x="275" y="245" width="450" height="105" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
+<text x="291" y="274" class="head">一次 useAssistantForms 注册</text>
+<text x="291" y="301" class="body">合并字段描述与读写能力</text>
+<text x="291" y="324" class="body">fields 补类型、候选、联动和列表列</text>
+<path d="M500 350V384" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>
+<rect x="275" y="384" width="450" height="76" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
+<text x="291" y="413" class="head">一个 target → 预览与确认</text>
+<text x="291" y="440" class="body">按字段归属写回对应来源</text>
+</svg>

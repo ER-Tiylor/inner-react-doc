@@ -1,6 +1,6 @@
 # 组件文档
 
-组件区按职责分成 5 组，优先建议从 `ProTable`、`ProForm`、`FormUpload`、`SearchInput` 这几类高复用组件开始阅读。
+组件区按职责分成 6 组，优先建议从 `ProTable`、`ProForm`、`FormUpload`、`SearchInput` 这几类高复用组件开始阅读。
 
 ## 分组导航
 
@@ -37,6 +37,14 @@
 - [LogModal 日志查看弹窗](/components/feedback/log-modal)
 - [UploadDrawer 附件上传抽屉](/components/feedback/upload-drawer)
 - [PDFViewer PDF 预览](/components/feedback/pdf-viewer)
+
+### AI
+
+- [系统介绍与架构](/components/ai/)
+- [子应用接入](/components/ai/app-integration)
+- [原子能力与 API](/components/ai/atomic-capabilities)
+- [场景组合与示例](/components/ai/scenarios)
+- [联调与排障](/components/ai/troubleshooting)
 
 ## 命名说明
 

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="425" viewBox="0 0 1000 425" role="img" aria-labelledby="title">
+<title id="title">页面问答 · 说明和业务数据分别传递</title>
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L7 4L0 8" fill="none" stroke="#526581" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:system-ui,"Microsoft YaHei",sans-serif;fill:#24344b}.title{font-size:23px;font-weight:700}.head{font-size:18px;font-weight:650}.body{font-size:16px}.note{font-size:14px;fill:#526581}</style>
+<rect width="1000" height="425" rx="16" fill="#f8fafc"/>
+<text x="30" y="43" class="title">页面问答 · 说明和业务数据分别传递</text>
+<rect x="35" y="85" width="440" height="96" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
+<text x="51" y="114" class="head">通道 A：受控说明</text>
+<text x="51" y="141" class="body">页面能力、固定解释规则</text>
+<path d="M255 181V215" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>
+<rect x="35" y="215" width="440" height="96" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
+<text x="51" y="244" class="head">context → 系统上下文</text>
+<text x="51" y="271" class="body">变化后 notifyAssistant()</text>
+<text x="51" y="294" class="body">不要混入用户可编辑的长正文</text>
+<rect x="525" y="85" width="440" height="96" rx="10" fill="#f0fdfa" stroke="#c3d1e3"/>
+<text x="541" y="114" class="head">通道 B：完整业务记录</text>
+<text x="541" y="141" class="body">由业务页面读取详情和明细</text>
+<path d="M745 181V215" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>
+<rect x="525" y="215" width="440" height="96" rx="10" fill="#f0fdfa" stroke="#c3d1e3"/>
+<text x="541" y="244" class="head">initialData → 数据快照工具</text>
+<text x="541" y="271" class="body">get_conversation_data</text>
+<text x="541" y="294" class="body">数据供模型引用，不是行为指令</text>
+<text x="35" y="403" class="note">两种通道共同支持问答；kind=chat 的目标不提供表单读取和填写能力。</text>
+</svg>

@@ -1,0 +1,27 @@
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "系统介绍与架构"
+  },
+  {
+    "type": "file",
+    "name": "app-integration",
+    "label": "子应用接入"
+  },
+  {
+    "type": "file",
+    "name": "atomic-capabilities",
+    "label": "原子能力与 API"
+  },
+  {
+    "type": "file",
+    "name": "scenarios",
+    "label": "场景组合与示例"
+  },
+  {
+    "type": "file",
+    "name": "troubleshooting",
+    "label": "联调与排障"
+  }
+]

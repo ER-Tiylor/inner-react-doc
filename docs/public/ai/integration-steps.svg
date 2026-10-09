@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="795" viewBox="0 0 1000 795" role="img" aria-labelledby="title">
+<title id="title">新应用接入 · 先打通应用，再增加页面场景</title>
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L7 4L0 8" fill="none" stroke="#526581" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:system-ui,"Microsoft YaHei",sans-serif;fill:#24344b}.title{font-size:23px;font-weight:700}.head{font-size:18px;font-weight:650}.body{font-size:16px}.note{font-size:14px;fill:#526581}</style>
+<rect width="1000" height="795" rx="16" fill="#f8fafc"/>
+<text x="30" y="43" class="title">新应用接入 · 先打通应用，再增加页面场景</text>
+<rect x="35" y="80" width="470" height="96" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
+<text x="51" y="109" class="head">1. 已能在 PASS 正常打开</text>
+<text x="51" y="136" class="body">核对应用名、入口、路由与登录态</text>
+<rect x="590" y="80" width="375" height="96" rx="10" fill="#fff7ed" stroke="#c3d1e3"/>
+<text x="606" y="109" class="head">宿主维护者</text>
+<text x="606" y="136" class="body">已有 qiankun 注册是前提</text>
+<path d="M270 176V210" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>
+<rect x="35" y="210" width="470" height="96" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
+<text x="51" y="239" class="head">2. 引入 assistantBinding</text>
+<text x="51" y="266" class="body">共享 core 与当前协议配套</text>
+<text x="51" y="289" class="body">adapter 适配本应用控件与表单结构</text>
+<rect x="590" y="210" width="375" height="96" rx="10" fill="#fff7ed" stroke="#c3d1e3"/>
+<text x="606" y="239" class="head">应用维护者</text>
+<text x="606" y="266" class="body">不要复制助手填写引擎</text>
+<path d="M270 306V340" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>
+<rect x="35" y="340" width="470" height="96" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
+<text x="51" y="369" class="head">3. 挂载时连接，卸载时清理</text>
+<text x="51" y="396" class="body">connectAssistant(props.assistant)</text>
+<rect x="590" y="340" width="375" height="96" rx="10" fill="#fff7ed" stroke="#c3d1e3"/>
+<text x="606" y="369" class="head">应用入口 main.tsx</text>
+<text x="606" y="396" class="body">保持原渲染与清理逻辑</text>
+<path d="M270 436V470" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>
+<rect x="35" y="470" width="470" height="96" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
+<text x="51" y="499" class="head">4. 接入并验证一个简单页面</text>
+<text x="51" y="526" class="body">注册 target，读取、预览、确认写入</text>
+<rect x="590" y="470" width="375" height="96" rx="10" fill="#fff7ed" stroke="#c3d1e3"/>
+<text x="606" y="499" class="head">页面开发者</text>
+<text x="606" y="526" class="body">再扩展问答、明细和复杂联动</text>
+<path d="M270 566V600" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>
+<rect x="35" y="600" width="470" height="96" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
+<text x="51" y="629" class="head">5. 按需接入隐藏页面目录</text>
+<text x="51" y="656" class="body">发布 manifest，并由 PASS 显式收集</text>
+<rect x="590" y="600" width="375" height="96" rx="10" fill="#fff7ed" stroke="#c3d1e3"/>
+<text x="606" y="629" class="head">可选步骤</text>
+<text x="606" y="656" class="body">仅当前页使用助手时不必做</text>
+<text x="35" y="771" class="note">应用级工作完成一次；后续场景主要通过页面配置接入。</text>
+</svg>

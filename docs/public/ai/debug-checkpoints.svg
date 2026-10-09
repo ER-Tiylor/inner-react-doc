@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="925" viewBox="0 0 1000 925" role="img" aria-labelledby="title">
+<title id="title">填写排障 · 从第一处不符合预期的位置查起</title>
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L7 4L0 8" fill="none" stroke="#526581" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:system-ui,"Microsoft YaHei",sans-serif;fill:#24344b}.title{font-size:23px;font-weight:700}.head{font-size:18px;font-weight:650}.body{font-size:16px}.note{font-size:14px;fill:#526581}</style>
+<rect width="1000" height="925" rx="16" fill="#f8fafc"/>
+<text x="30" y="43" class="title">填写排障 · 从第一处不符合预期的位置查起</text>
+<rect x="35" y="80" width="470" height="96" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
+<text x="51" y="109" class="head">1. 当前目标是否正确？</text>
+<text x="51" y="136" class="body">检查 target、路由、激活状态</text>
+<rect x="590" y="80" width="375" height="96" rx="10" fill="#fff7ed" stroke="#c3d1e3"/>
+<text x="606" y="109" class="head">不正确时</text>
+<text x="606" y="136" class="body">查 PASS 桥接与页面注册</text>
+<path d="M270 176V210" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>
+<rect x="35" y="210" width="470" height="96" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
+<text x="51" y="239" class="head">2. 真实字段是否完整？</text>
+<text x="51" y="266" class="body">查看 get_current_form_context</text>
+<rect x="590" y="210" width="375" height="96" rx="10" fill="#fff7ed" stroke="#c3d1e3"/>
+<text x="606" y="239" class="head">字段缺失时</text>
+<text x="606" y="266" class="body">查页面字段、控件推导和显隐</text>
+<path d="M270 306V340" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>
+<rect x="35" y="340" width="470" height="96" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
+<text x="51" y="369" class="head">3. 模型是否提交了目标字段？</text>
+<text x="51" y="396" class="body">查看 prepare_form_fill 的 values</text>
+<rect x="590" y="340" width="375" height="96" rx="10" fill="#fff7ed" stroke="#c3d1e3"/>
+<text x="606" y="369" class="head">没有提交时</text>
+<text x="606" y="396" class="body">查原文、context 和实际路由</text>
+<path d="M270 436V470" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>
+<rect x="35" y="470" width="470" height="96" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
+<text x="51" y="499" class="head">4. 预览是否报告不写入？</text>
+<text x="51" y="526" class="body">查看候选解析与 problem 信息</text>
+<rect x="590" y="470" width="375" height="96" rx="10" fill="#fff7ed" stroke="#c3d1e3"/>
+<text x="606" y="499" class="head">有问题项时</text>
+<text x="606" y="526" class="body">查候选范围、歧义及字段能力</text>
+<path d="M270 566V600" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>
+<rect x="35" y="600" width="470" height="96" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
+<text x="51" y="629" class="head">5. 确认后的控件值是否正确？</text>
+<text x="51" y="656" class="body">核对写入、联动和回读</text>
+<rect x="590" y="600" width="375" height="96" rx="10" fill="#fff7ed" stroke="#c3d1e3"/>
+<text x="606" y="629" class="head">值不正确时</text>
+<text x="606" y="656" class="body">查 apply、数据形状和页面状态</text>
+<path d="M270 696V730" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>
+<rect x="35" y="730" width="470" height="96" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
+<text x="51" y="759" class="head">6. 页面校验与试算是否正确？</text>
+<text x="51" y="786" class="body">通过原业务流程验证结果</text>
+<rect x="590" y="730" width="375" height="96" rx="10" fill="#fff7ed" stroke="#c3d1e3"/>
+<text x="606" y="759" class="head">计算或保存失败时</text>
+<text x="606" y="786" class="body">按原页面与后端业务链路排查</text>
+<text x="35" y="901" class="note">每一步正确后再看下一步；预览项数和前端回读都不能替代业务验收。</text>
+</svg>

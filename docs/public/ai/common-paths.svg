@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="555" viewBox="0 0 1000 555" role="img" aria-labelledby="title">
+<title id="title">两条常用链路 · 填表与业务解读</title>
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L7 4L0 8" fill="none" stroke="#526581" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:system-ui,"Microsoft YaHei",sans-serif;fill:#24344b}.title{font-size:23px;font-weight:700}.head{font-size:18px;font-weight:650}.body{font-size:16px}.note{font-size:14px;fill:#526581}</style>
+<rect width="1000" height="555" rx="16" fill="#f8fafc"/>
+<text x="30" y="43" class="title">两条常用链路 · 填表与业务解读</text>
+<rect x="35" y="85" width="440" height="96" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
+<text x="51" y="114" class="head">填写 ① 用户提出要求</text>
+<text x="51" y="141" class="body">文字或附件描述拟填内容</text>
+<path d="M255 181V215" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>
+<rect x="35" y="215" width="440" height="96" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
+<text x="51" y="244" class="head">填写 ② 读取表单，整理预览</text>
+<text x="51" y="271" class="body">L1 通过前端工具取得真实字段</text>
+<text x="51" y="294" class="body">助手解析候选并展示草稿</text>
+<path d="M255 311V345" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>
+<rect x="35" y="345" width="440" height="96" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
+<text x="51" y="374" class="head">填写 ③ 用户确认后写入</text>
+<text x="51" y="401" class="body">执行原页面联动与回读</text>
+<text x="51" y="424" class="body">业务提交仍由用户在原页面完成</text>
+<rect x="525" y="85" width="440" height="96" rx="10" fill="#f0fdfa" stroke="#c3d1e3"/>
+<text x="541" y="114" class="head">解读 ① 点击业务入口</text>
+<text x="541" y="141" class="body">页面调用已有接口读取完整数据</text>
+<path d="M745 181V215" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>
+<rect x="525" y="215" width="440" height="96" rx="10" fill="#f0fdfa" stroke="#c3d1e3"/>
+<text x="541" y="244" class="head">解读 ② 保存当前会话快照</text>
+<text x="541" y="271" class="body">数据工具向 L1 提供 JSON</text>
+<text x="541" y="294" class="body">context 提供受控解释规则</text>
+<path d="M745 311V345" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>
+<rect x="525" y="345" width="440" height="96" rx="10" fill="#f0fdfa" stroke="#c3d1e3"/>
+<text x="541" y="374" class="head">解读 ③ 模型解释数据</text>
+<text x="541" y="401" class="body">用户可继续提问</text>
+<text x="541" y="424" class="body">不会因此自动写表单或提交</text>
+<text x="35" y="533" class="note">两条链路可在同一会话衔接；跳到填写页后仍须重新读取目标字段。</text>
+</svg>

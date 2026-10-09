@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="890" viewBox="0 0 1100 890" role="img" aria-labelledby="title">
+<title id="title">表单填写流程：读取字段、模型整理、预览确认、页面联动与用户提交</title><defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto-start-reverse"><path d="M0 0L8 4L0 8" fill="none" stroke="#526581" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:system-ui,"Microsoft YaHei",sans-serif;fill:#24344b}.title{font-size:23px;font-weight:700}.head{font-size:19px;font-weight:650}.body{font-size:16px}.small{font-size:14px;fill:#526581}.line{fill:none;stroke:#526581;stroke-width:2;marker-end:url(#arrow)}</style>
+<rect width="1100" height="890" rx="16" fill="#f8fafc"/>
+<text x="32" y="42" class="title">填写流程 · 预览、填入、提交是三个步骤</text>
+<rect x="20" y="65" width="230" height="48" rx="10" fill="#e8eef8"/>
+<text x="37" y="96" class="head">用户</text>
+<path d="M135 115V818" stroke="#cbd5e1" stroke-dasharray="5 6"/>
+<rect x="295" y="65" width="230" height="48" rx="10" fill="#e8eef8"/>
+<text x="312" y="96" class="head">助手前端</text>
+<path d="M410 115V818" stroke="#cbd5e1" stroke-dasharray="5 6"/>
+<rect x="560" y="65" width="230" height="48" rx="10" fill="#e8eef8"/>
+<text x="577" y="96" class="head">业务页面 / FormPort</text>
+<path d="M675 115V818" stroke="#cbd5e1" stroke-dasharray="5 6"/>
+<rect x="835" y="65" width="230" height="48" rx="10" fill="#e8eef8"/>
+<text x="852" y="96" class="head">L1 / 模型</text>
+<path d="M950 115V818" stroke="#cbd5e1" stroke-dasharray="5 6"/>
+<path d="M135 165H410" class="line"/>
+<text x="147" y="153" class="small">1. 提出填写要求</text>
+<path d="M410 225H950" class="line"/>
+<text x="422" y="213" class="small">2. 发送消息与页面上下文</text>
+<path d="M950 285H410" class="line"/>
+<text x="422" y="273" class="small">3. 调用读取表单工具</text>
+<path d="M410 345H675" class="line"/>
+<text x="422" y="333" class="small">4. 读取真实字段与当前值</text>
+<path d="M410 405H950" class="line"/>
+<text x="422" y="393" class="small">5. 返回字段描述；模型整理拟填内容</text>
+<path d="M950 465H410" class="line"/>
+<text x="422" y="453" class="small">6. 调用生成预览工具</text>
+<path d="M410 525H675" class="line"/>
+<text x="422" y="513" class="small">7. 解析页面候选，准备拟填值</text>
+<path d="M410 585H135" class="line"/>
+<text x="147" y="573" class="small">8. 展示预览，可继续修订</text>
+<path d="M135 645H410" class="line"/>
+<text x="147" y="633" class="small">9. 用户点击确认填入</text>
+<path d="M410 705H675" class="line"/>
+<text x="422" y="693" class="small">10. 复核、写入、联动、回读</text>
+<path d="M135 785H675" class="line"/>
+<text x="147" y="773" class="small">11. 用户在原页面校验、试算或提交</text>
+<rect x="760" y="548" width="300" height="168" rx="12" fill="#fff7ed" stroke="#e9b773" stroke-width="1.5"/>
+<text x="780" y="580" class="head">两个边界</text>
+<text x="780" y="612" class="body">生成预览 ≠ 已写入</text>
+<text x="780" y="638" class="body">确认填入 ≠ 已提交</text>
+<text x="780" y="664" class="body">页面变化可能使草稿失效</text>
+<text x="780" y="690" class="body">候选查询与联动留在业务页</text>
+<text x="32" y="858" class="small">图中省略部分响应箭头；所有页面操作都经过现有字段能力和业务约束。</text>
+</svg>
