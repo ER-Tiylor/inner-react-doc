@@ -22,6 +22,8 @@
 | --- | --- | --- | --- |
 | 打开助手 | `@/assistantBinding` 的函数 `openAssistant`，或组件 `AssistantButton` | `openAssistant(targetId?)` | 打开共享窗口，不是创建第二个独立窗口 |
 | 发起新一轮会话 | `openAssistant` 的 `options.newSession`；`AssistantButton` 的 `newSession` 属性 | `openAssistant(targetId, { newSession: true })` | 未使用的空会话可能复用 |
+| 本轮首次开窗 | `openAssistant` 的 `options.sessionKey`；`AssistantButton` 的 `sessionKey` 属性 | `sessionKey: useAssistantSession().sessionKey` | 只在本轮**首次**点击时换新会话（优先于 `newSession`）；不带则完全沿用旧行为 |
+| 首句只自动发一次 | `openAssistant` 的 `options.initialMessage.once` | `initialMessage: { text: '…', autoSend: true, once: true }` | 需要非空 `sessionKey`、`text`、`autoSend:true`；已消费后再打开只开窗，不重发、不重读 `initialData` |
 | 预填输入框 | `openAssistant` 的 `options.initialMessage.text` | `initialMessage: { text: '…' }` | 默认不发送 |
 | 开窗后自动发送首句 | `openAssistant` 的 `options.initialMessage.autoSend` | `initialMessage: { text: '…', autoSend: true }` | 等待会话与所带数据就绪，发送一次 |
 | 直接调用通用发送接口 | **没有这样的页面 API**；发送是助手前端内部实现，未对业务侧暴露 | — | 不等于助手内部没有发送实现 |
@@ -35,13 +37,13 @@
 
 ## 1. 子应用 AI 相关 API
 
-以下全部从业务应用的 `@/assistantBinding` 导入：`connectAssistant`、`openAssistant`、`notifyAssistant`、`rawRow` 是普通函数；`useAssistantConfig`、`useAssistantForm` 是 Hook；`AssistantButton` 是 React 组件；`IAssistantConfig` 等是供 TypeScript 使用的类型。命名（2026-10-09）：注册 Hook 新名 `useAssistantConfig`，纯类型统一加 `I` 前缀；旧名（`useAssistantForms`、`AssistantFormConfig` 等）保留为兼容别名，存量页面不必改，新页面用新名，下文示例均已用新名。没有有效宿主连接时，开窗和通知不会执行；它们不返回业务执行结果。
+以下全部从业务应用的 `@/assistantBinding` 导入：`connectAssistant`、`openAssistant`、`notifyAssistant`、`rawRow` 是普通函数；`useAssistantConfig`、`useAssistantForm`、`useAssistantSession` 是 Hook；`AssistantButton` 是 React 组件；`IAssistantConfig` 等是供 TypeScript 使用的类型。命名（2026-10-09）：注册 Hook 新名 `useAssistantConfig`，纯类型统一加 `I` 前缀；旧名（`useAssistantForms`、`AssistantFormConfig` 等）保留为兼容别名，存量页面不必改，新页面用新名，下文示例均已用新名。没有有效宿主连接时，开窗和通知不会执行；它们不返回业务执行结果。
 
 ```ts
 // 运行时 API：函数、Hook、组件，都从这里导入
 import {
   connectAssistant, openAssistant, notifyAssistant, rawRow,
-  useAssistantConfig, useAssistantForm, AssistantButton,
+  useAssistantConfig, useAssistantForm, useAssistantSession, AssistantButton,
 } from '@/assistantBinding'
 
 // 类型标注（可选）：配置类型在 describeFields 模块
@@ -55,10 +57,12 @@ import type {
 **作用**：在子应用生命周期里接上 PASS 注入的助手客户端。只建立连接，不注册业务页面、不打开窗口。完整接法见 [子应用接入](./app-integration)。
 
 ```ts
-connectAssistant(next?: BusinessClient): () => void
+connectAssistant(next?: IBusinessClient, appConfig?: IAssistantAppConfig): () => void
 ```
 
 `next` 是 qiankun 注入的 `props.assistant`，要求协议 v2。返回断开函数，在子应用卸载时调用。
+
+`appConfig` 是应用级声明（可选，旧接入不传不变）：`appQuestions` 为应用首问；`appName` 为应用展示名（如「结算中心」），随快照进助手——页面没有注册 target 时，欢迎页显示「当前位于：xxx」，未声明则回落通用文案。
 
 **示例**：
 
@@ -86,7 +90,8 @@ openAssistant(targetId?: string, options?: IOpenOptions): void
 
 interface IOpenOptions {
   newSession?: boolean
-  initialMessage?: { text: string; autoSend?: boolean }
+  sessionKey?: string
+  initialMessage?: { text: string; autoSend?: boolean; once?: boolean }
   initialData?: {
     type: string
     load: (signal?: AbortSignal) => Promise<unknown>
@@ -99,6 +104,8 @@ interface IOpenOptions {
 | `targetId` | 否 | 页面 hook 返回的目标 ID；多个目标时应显式传入 |
 | `newSession` | 否 | 默认沿用当前会话；true 时已使用的会话换新，空会话可复用 |
 | `initialMessage.text` | 提供 initialMessage 时必填 | 已生成的字符串；空白文本不会作为有效首句 |
+| `sessionKey` | 否 | useAssistantSession 生成的本轮标识；仅首次开窗时将已使用会话换新，优先于 newSession |
+| `initialMessage.once` | 否 | 需要 sessionKey、非空 text、autoSend:true；本轮消息被接受后不再自动重发，重复打开不重读 initialData |
 | `initialMessage.autoSend` | 否 | 默认 false，仅预填；true 时就绪后发送一次 |
 | `initialData.type` | 提供 initialData 时必填 | 业务数据类型标识，如 billingProtocol |
 | `initialData.load` | 提供 initialData 时必填 | 前端读取函数，返回可 JSON 序列化的数据；失败应抛错 |
@@ -131,7 +138,7 @@ openAssistant(targetId, {
 
 ```ts
 useAssistantConfig(
-  sources: AssistantSource[],
+  sources: IAssistantSource[],
   config: IAssistantConfig,
   instanceId?: string,
 ): string
@@ -150,7 +157,7 @@ const targetId = useAssistantConfig(
   {
     title: '规则 · 新增',
     enabled: visible,
-    questions: ['根据我提供的信息整理填写预览'],
+    pageQuestions: ['根据我提供的信息整理填写预览'],
   },
   `rule-${recordId}`,
 )
@@ -174,7 +181,7 @@ import { useAssistantForm } from '@/assistantBinding'
 const targetId = useAssistantForm(formRef, formItem, {
   title: '单据 · 新增',
   enabled: ready,
-  questions: [],
+  pageQuestions: [],
 })
 ```
 
@@ -226,6 +233,7 @@ if (candidate?.address) form.setFieldValue('address', candidate.address)
 | `targetId` | string | 可选，显式指定目标 |
 | `ghost` | boolean | true；纯问答入口通常设 false |
 | `newSession` | boolean | false；沿用当前会话 |
+| `sessionKey` | string | 可选；本轮仅首次点击时新建，优先于 newSession |
 | `children` | ReactNode | “AI 智能填写” |
 
 **示例**：
@@ -249,7 +257,7 @@ import { AssistantButton } from '@/assistantBinding'
 | --- | --- | --- |
 | `title` | string | 必填，目标和预览标题 |
 | `enabled` | boolean | 必填，真实可用时才注册，抽屉关闭或数据未就绪时关闭 |
-| `questions` | string[] | 必填，可传空数组；展示给用户的建议提问，不是系统提示 |
+| `pageQuestions` | string[] | 可选；页面首问，空清单回退应用/全局，旧 questions 仍兼容 |
 | `kind` | form / chat | 默认 form；chat 为只读咨询 |
 | `context` | `{ description, value }` | 可选；value 是对象或返回对象的函数 |
 | `defaults` | Record | 可选；补充页面认可的默认值，不等于原文识别结果 |
@@ -264,7 +272,7 @@ context 进入系统上下文，适合代码维护的规则和受控页面事实
 | 跨记录稳定成立的页面事实和解读口径 | Hook 的 `config.context` | 桥快照在激活/notify 时重发，会话全程生效；用户手动开窗也读得到 |
 | 这一次想问什么 | `openAssistant` 的 `initialMessage` | 成为会话首句用户消息，进入历史 |
 | 本条记录的完整业务数据 | `openAssistant` 的 `initialData` | 每次点击单独读取，进会话快照，模型用 `get_conversation_data` 取 |
-| 展示给用户的快捷提问 | `config.questions` | 只是界面建议，不进提示词 |
+| 展示给用户的快捷提问 | `config.pageQuestions` | 只是界面建议，不进提示词 |
 
 context 不放进开窗意图：开窗只发生一次，页面能力事实却被模型持续读取。表达“能力”放注册通道，表达“这一次”放 `IOpenOptions`。
 
@@ -273,7 +281,7 @@ context 不放进开窗意图：开窗只发生一次，页面能力事实却被
 ```tsx
 // 注册页面解读能力:口径跨记录稳定,放 context;来源为空 + kind chat
 const targetId = useAssistantConfig([], {
-  title: '计费协议 · AI 解读', enabled: ready, kind: 'chat', questions: [],
+  title: '计费协议 · AI 解读', enabled: ready, kind: 'chat', pageQuestions: [],
   context: { description: '解读口径', value: () => ({ instruction: '先取会话数据,缺失时说明,不猜测。' }) },
 }, 'protocol-interpret')
 
@@ -306,7 +314,7 @@ openAssistant(targetId, {
 | `get_current_form_context` | 页面表单的**实时**字段、候选、当前值 | 每次现取，是“填写现场”；与快照（后端业务数据）互补，不能拿它当详情查询 |
 | 用户消息 / 对话内附件 | 用户自己输入的文字、上传的文件 | 进会话历史；附件由后端提取正文，解析失败或内容缺失不是页面 API 能兜的 |
 | `initialMessage` | 这一次要问什么 | 一次性用户消息，进历史；不是持续生效的系统提示 |
-| `config.questions` | 界面建议提问 | 只展示给用户，**不进提示词**，模型看不到 |
+| `config.pageQuestions` | 界面建议提问 | 只展示给用户，**不进提示词**，模型看不到 |
 
 ### 浮窗、target、会话、快照：对象关系与生命周期
 
@@ -333,11 +341,11 @@ openAssistant(targetId, {
 
 | 来源 | 必需配置 | 读取/写入方式 |
 | --- | --- | --- |
-| FormRefSource | `formRef, groups` | 现有表单实例 |
-| TableSource | `tableRef, columns, name, label`；`rowKey` 可选，默认 id | 同步 `getDataSync()` / `setData(rows)`，整体作为对象数组 |
-| PageSource | `read, write` | 页面提供同步读取和字段路径写入 |
+| IFormRefSource | `formRef, groups` | 现有表单实例 |
+| ITableSource | `tableRef, columns, name, label`；`rowKey` 可选，默认 id | 同步 `getDataSync()` / `setData(rows)`，整体作为对象数组 |
+| IPageSource | `read, write` | 页面提供同步读取和字段路径写入 |
 
-`PageSource.read(): Values`，`write(changes: { path: (string | number)[]; value: unknown }[]): void`。自定义字段需要在 fields 声明 `register: true`、`label`、`type`。读取不能返回 Promise。
+`IPageSource.read(): IValues`，`write(changes: { path: (string | number)[]; value: unknown }[]): void`。自定义字段需要在 fields 声明 `register: true`、`label`、`type`。读取不能返回 Promise。
 
 ### 字段扩展能力
 
@@ -419,6 +427,57 @@ openAssistant(targetId, {
 | 新增后端业务查询/场景 | L1/L3 工具与业务接口，沿原权限和业务约束接入 |
 | 修改跨应用协议 | PASS 桥接类型/实现，配套同步助手和业务适配层 |
 
-底层 `BusinessClient` 提供 `register(port)`（返回注销函数）、`notify()`、`open(targetId?, options?)`、`dispose()`；页面通常使用 hook 包装，不直接管理这些生命周期。助手侧 `AssistantClient` 提供快照订阅和 `getPort(id)`，不属于普通页面 API。
+底层 `IBusinessClient` 提供 `register(port)`（返回注销函数）、`notify()`、`open(targetId?, options?)`、`dispose()`；页面通常使用 hook 包装，不直接管理这些生命周期。助手侧 `IAssistantClient` 提供快照订阅和 `getPort(id)`，不属于普通页面 API。
 
 后端场景工具由 L1 装配和部署配置决定，本章的前端清单不能当成全部后端能力清单。新增工具后，还需验证 L1 实际路由与工具选择，注册成功不等于模型一定调用。
+
+## 页面、子应用与全局首问
+
+首问按 `pageQuestions → appQuestions → 全局` 取第一份非空清单，不叠加，也不补足 3 条。页面与应用清单不区分 `kind`，问题内容由业务维护；两层都为空时，有已选中的表单目标使用 `globalFormQuestions`，否则使用 `globalChatQuestions`。
+
+```ts
+// config/assistant.ts
+import type { IAssistantAppConfig } from '@/assistantBinding/describeFields'
+export const assistantAppConfig: IAssistantAppConfig = {
+  appQuestions: ['计费协议和计费规则有什么区别？', '全量阶梯和增量阶梯有什么区别？'],
+}
+
+// main.tsx：在现有连接处增加可选第二参数
+disconnectAssistant = connectAssistant(props.assistant, assistantAppConfig)
+
+// 页面配置；这里只显示这一条，不追加应用或全局问题
+useAssistantConfig([], {
+  title: '协议列表', kind: 'chat', enabled: true,
+  pageQuestions: ['这个列表支持哪些筛选条件？'],
+})
+```
+
+- 未注册页面目标也能使用当前子应用的首问；切应用按当前路由重新选择，后台保活应用不会覆盖当前应用。
+- 空数组或全空白向下一层回退；同一清单去除首尾空白并去重。多于 3 条才显示“换一批”。
+- 旧 `questions` 保留兼容，使用 `pageQuestions ?? questions` 读取。显式 `pageQuestions: []` 不再读取旧字段，直接回退应用层。
+- 原 `connectAssistant(props.assistant)` 无需修改；旧 PASS 缺少应用配置接口时安全降级。启用应用清单需更新 PASS、AI 前端及该业务应用的适配层。
+- BMS 已接入示例；TMS、OMS 适配层已支持，但未配置应用问题，现有页面无需迁移才能运行。
+- 清单只用于欢迎页推荐，不改变知识库、Agent、工具权限或自动发送行为。已有会话不插入推荐消息。
+
+## useAssistantSession：本轮首次开窗与一次性首句
+
+`useAssistantSession()` 返回 `{ sessionKey, resetSession }`。key 在组件本轮内稳定，KeepAlive 切页和助手开关不会重置；组件重建或 reset 后得到新 key。
+
+```tsx
+const { sessionKey, resetSession } = useAssistantSession()
+<AssistantButton targetId={targetId} sessionKey={sessionKey} />
+// 创建成功或明确放弃本轮后调用 resetSession()，不要在普通切页时调用。
+```
+
+带 sessionKey 的入口仅本轮首次点击时将已用过的会话换新，优先于 newSession；不带则保持旧行为。无首句也可用。手动选择历史后仍尊重当前会话，不自动恢复之前的业务对话。
+
+```tsx
+openAssistant(targetId, {
+  sessionKey,
+  initialMessage: { text: '根据当前委托单推荐运力', autoSend: true, once: true },
+})
+```
+
+once 需要非空 sessionKey、text 和 autoSend:true。首句被本地接受后，再点入口既不新建、不重发，也不重复读取 initialData。准备阶段关闭后可再次点击重试；网络发送结果不确定时需用户手动重试。不同独立入口各用自己的 Hook。需要新版 AI 前端支持，Java 无改动。
+
+已消费之后用户想**再要一次**（同一入口重跑，如换了单据或想重新推荐）：在对话里手动发送同一句，或页面先 `resetSession()` 再让他点一次入口（reset 只换 key，不打开助手、不创建会话、不发送消息）；目前框架没有"重跑"按钮，需要的话由页面提供。

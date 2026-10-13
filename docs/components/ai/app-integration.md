@@ -110,3 +110,7 @@ renderWithQiankun({
 - 独立运行或助手不可用时，原业务页可使用。
 
 完成这些后，新增具体功能通常只需要改页面配置。
+
+### 可选：配置子应用首问
+
+在 `connectAssistant` 第二参数传入 `{ appQuestions: [...] }`，即可覆盖该子应用未配置页面首问的页面。不传则保持全局兜底；旧页面 `questions` 仍可用。完整例子见[首问配置](./atomic-capabilities.md#页面子应用与全局首问)。

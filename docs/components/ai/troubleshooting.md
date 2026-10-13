@@ -24,6 +24,10 @@
 | 跳转了但不能填写 | 目标表单是否唯一、激活、初始化完成；是否 waitFor=form |
 | 想填表却进入其他场景 | 真实 L1 工具路由、后端提示与页面 context 是否冲突 |
 | 历史里出现多张修订表 | 查看替代关系和 baseDraftId，不能只按标题合并 |
+| 重进页面仍是上一次的会话 | 入口是否传了 `sessionKey`（`useAssistantSession`）、本轮结束时是否 `resetSession()`；KeepAlive 下"关页面"不等于组件销毁，key 不会自己换 |
+| 第二次点入口不重发、像没反应 | 设计如此：`initialMessage.once` 已消费后只开窗；要重跑先 `resetSession()` 再点，或在对话里手动发同一句 |
+| 首句没自动发出 | `once` 是否同时配了 `sessionKey` + 非空 `text` + `autoSend:true`；准备阶段关窗/改输入会取消本次发送，再点入口可重试 |
+| 同一页第二个入口点了没反应 | 两个入口是否各用自己的 `useAssistantSession`；共用一份 `sessionKey` 时，第二个入口会因"首句已消费"而只开窗不发送 |
 
 ## 一次联调保留什么
 
@@ -55,7 +59,11 @@
 - BMS：`frontend/src/assistantBinding/README.md`、`index.tsx`、`describeFields.ts`、`adapter.ts`；计费协议列表与规则页面。
 - PASS 文档：`docs/ai-assistant-architecture.md`、`assistant-form-integration.md`、`assistant-form-hooks.md`、`assistant-form-ownership.md`。
 - PASS 源码：`frontend/src/ai/assistantBridgeProtocol.ts`、`ai/components/AssistantSlot.tsx`、`microapps/specs.ts`、`microapps/pageManifest.ts`。
-- ai-agents 前端：`frontend/src/components/Assistant/` 下的 `ChatSession.tsx`、`navigation.ts`、`formReady.ts`、`conversationData.ts`、`fill.ts`、`Preview.tsx`、`fillPromptCard.tsx`、`inlineFillPrompt.ts`、`fillPromptHistory.ts`。
+- ai-agents 前端：`frontend/src/components/Assistant/` 下的 `ChatSession.tsx`、`store.ts`、`assistantBridgeProtocol.ts`、`navigation.ts`、`formReady.ts`、`conversationData.ts`、`fill.ts`、`Preview.tsx`、`fillPromptCard.tsx`、`inlineFillPrompt.ts`、`fillPromptHistory.ts`；会话生命周期设计见 `docs/2026-10-12-assistant-session-lifecycle-design.md`。
 - ai-agents 后端：`java-agents/l1-agent/build.gradle`、L1 系统提示、文件解析和上下文注入代码。
 
-核对日期：2026-10-09。这里说明当前能力与接入方式，不把历史设计中的计划项当成已支持能力。
+核对日期：2026-10-12。这里说明当前能力与接入方式，不把历史设计中的计划项当成已支持能力。
+
+### 首问清单不符合预期
+
+先检查当前页面的 `pageQuestions`（兼容旧 `questions`），再检查当前子应用的 `appQuestions`。只取第一份非空清单，不叠加；只有两层都为空才选择全局表单或通用清单。若子应用首问不生效，确认 PASS 和 AI 前端已更新，并在应用挂载时把配置传给 `connectAssistant`。

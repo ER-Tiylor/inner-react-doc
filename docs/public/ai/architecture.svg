@@ -8,7 +8,7 @@
 <rect x="230" y="119" width="640" height="104" rx="12" fill="#ffffff" stroke="#93b4e9" stroke-width="1.5"/>
 <text x="250" y="151" class="head">PASS：加载与桥接</text>
 <text x="250" y="183" class="body">页面目录 / 导航 / 子应用加载</text>
-<text x="250" y="209" class="body">assistantBridge：登记 FormPort、维护当前 target / 路由 / 会话</text>
+<text x="250" y="209" class="body">assistantBridge：登记 IFormPort、维护当前 target / 路由 / 会话</text>
 <rect x="50" y="300" width="420" height="158" rx="12" fill="#f0fdfa" stroke="#5bb8ac" stroke-width="1.5"/>
 <text x="70" y="332" class="head">助手子应用 · feagents</text>
 <text x="70" y="364" class="body">CopilotKit 对话、会话、附件、前端工具</text>
@@ -17,7 +17,7 @@
 <rect x="630" y="300" width="420" height="158" rx="12" fill="#fff7ed" stroke="#e9b773" stroke-width="1.5"/>
 <text x="650" y="332" class="head">业务子应用 · BMS / OMS / TMS …</text>
 <text x="650" y="364" class="body">assistantBinding：描述本应用控件与字段</text>
-<text x="650" y="390" class="body">FormPort：describe / read / write / 候选</text>
+<text x="650" y="390" class="body">IFormPort：describe / read / write / 候选</text>
 <text x="650" y="416" class="body">原页面：表单、接口请求、业务联动</text>
 <path d="M360 223 V280 H260 V300" class="line"/>
 <text x="62" y="260" class="small">注入助手客户端与导航能力</text>

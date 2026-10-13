@@ -10,7 +10,7 @@
 <text x="312" y="96" class="head">助手前端</text>
 <path d="M410 115V818" stroke="#cbd5e1" stroke-dasharray="5 6"/>
 <rect x="560" y="65" width="230" height="48" rx="10" fill="#e8eef8"/>
-<text x="577" y="96" class="head">业务页面 / FormPort</text>
+<text x="577" y="96" class="head">业务页面 / IFormPort</text>
 <path d="M675 115V818" stroke="#cbd5e1" stroke-dasharray="5 6"/>
 <rect x="835" y="65" width="230" height="48" rx="10" fill="#e8eef8"/>
 <text x="852" y="96" class="head">L1 / 模型</text>

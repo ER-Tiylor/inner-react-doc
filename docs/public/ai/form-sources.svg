@@ -5,19 +5,19 @@
 <rect width="1000" height="470" rx="16" fill="#f8fafc"/>
 <text x="30" y="43" class="title">表单接入 · 多个数据来源，合成一个填写目标</text>
 <rect x="30" y="85" width="290" height="96" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
-<text x="46" y="114" class="head">表单 FormRefSource</text>
+<text x="46" y="114" class="head">表单 IFormRefSource</text>
 <text x="46" y="141" class="body">formRef + groups</text>
 <path d="M175 181V213H500V245" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>
 <rect x="355" y="85" width="290" height="96" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
-<text x="371" y="114" class="head">编辑表格 TableSource</text>
+<text x="371" y="114" class="head">编辑表格 ITableSource</text>
 <text x="371" y="141" class="body">tableRef + columns + name</text>
 <path d="M500 181V213H500V245" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>
 <rect x="680" y="85" width="290" height="96" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
-<text x="696" y="114" class="head">页面状态 PageSource</text>
+<text x="696" y="114" class="head">页面状态 IPageSource</text>
 <text x="696" y="141" class="body">read + write</text>
 <path d="M825 181V213H500V245" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>
 <rect x="275" y="245" width="450" height="105" rx="10" fill="#eff6ff" stroke="#c3d1e3"/>
-<text x="291" y="274" class="head">一次 useAssistantForms 注册</text>
+<text x="291" y="274" class="head">一次 useAssistantConfig 注册</text>
 <text x="291" y="301" class="body">合并字段描述与读写能力</text>
 <text x="291" y="324" class="body">fields 补类型、候选、联动和列表列</text>
 <path d="M500 350V384" fill="none" stroke="#526581" stroke-width="1.8" marker-end="url(#a)"/>

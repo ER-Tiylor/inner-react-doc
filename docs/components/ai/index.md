@@ -68,10 +68,10 @@ PASS 提供常驻容器；窗口形态、拖动和全屏由助手子应用处理
 ## 三个常见名词
 
 - **target**：助手当前操作的页面实例，不是业务单据 ID。
-- **FormPort**：页面登记的能力对象，包括 `describe/read/write/ensureOptions/context` 等方法。只问答页面也可登记，但 `kind` 为 `chat`。
+- **IFormPort**：页面登记的能力对象，包括 `describe/read/write/ensureOptions/context` 等方法。只问答页面也可登记，但 `kind` 为 `chat`。
 - **draft**：一次填写预览，绑定生成时的目标、会话和表单快照。
 
-业务客户端由 PASS 经 qiankun 的 `props.assistant` 注入。它登记 FormPort；助手再从桥取得该对象，调用页面自己的读写函数。模型只看到可序列化的字段描述，不会拿到这些函数。
+业务客户端由 PASS 经 qiankun 的 `props.assistant` 注入。它登记 IFormPort；助手再从桥取得该对象，调用页面自己的读写函数。模型只看到可序列化的字段描述，不会拿到这些函数。
 
 ## 为什么候选和联动留在业务应用
 

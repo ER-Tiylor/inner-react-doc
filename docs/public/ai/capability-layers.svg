@@ -4,7 +4,7 @@
 <text x="30" y="44" class="title">原子能力分层 · 页面 API 与模型工具不是同一层</text>
 <rect x="30" y="82" width="505" height="205" rx="12" fill="#eff6ff" stroke="#cbd5e1"/>
 <text x="48" y="114" class="head">业务页面开发者：组合公开 API</text>
-<text x="48" y="146" class="body">注册目标：useAssistantForms / useAssistantForm</text>
+<text x="48" y="146" class="body">注册目标：useAssistantConfig / useAssistantForm</text>
 <text x="48" y="173" class="body">开窗与首句：openAssistant / AssistantButton</text>
 <text x="48" y="200" class="body">上下文更新：context + notifyAssistant</text>
 <text x="48" y="227" class="body">业务数据：initialData.load</text>
@@ -29,7 +29,7 @@
 <text x="577" y="529" class="note">用户确认后，通过页面能力写入</text>
 <rect x="145" y="552" width="810" height="118" rx="12" fill="#fff7ed" stroke="#cbd5e1"/>
 <text x="163" y="584" class="head">业务页面：原有字段、候选、联动与提交</text>
-<text x="163" y="616" class="body">FormPort 提供 describe / read / write / ensureOptions</text>
+<text x="163" y="616" class="body">IFormPort 提供 describe / read / write / ensureOptions</text>
 <text x="163" y="643" class="body">权限、业务校验、试算和保存仍沿用原系统</text>
 <text x="35" y="715" class="body">扩展分工：普通场景先组合公开能力；新增工具或协议变化由平台维护者实现。</text>
 <text x="35" y="745" class="note">开窗 ≠ 新会话 ≠ 自动发送；本图是职责分层，不表示所有工具都必须按同一顺序调用。</text>
