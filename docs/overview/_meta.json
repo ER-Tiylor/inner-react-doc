@@ -38,5 +38,15 @@
     "type": "file",
     "name": "npm-package-candidates",
     "label": "NPM 包候选清单"
+  },
+  {
+    "type": "file",
+    "name": "native-api-design",
+    "label": "原生能力与 JS API 设计"
+  },
+  {
+    "type": "file",
+    "name": "native-api-simulator-design",
+    "label": "原生能力交互模拟器设计"
   }
 ]

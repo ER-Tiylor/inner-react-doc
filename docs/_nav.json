@@ -5,7 +5,7 @@
     "activeMatch": "^/$"
   },
   {
-    "text": "组件文档",
+    "text": "开发文档",
     "link": "/components/",
     "activeMatch": "^/components/"
   },

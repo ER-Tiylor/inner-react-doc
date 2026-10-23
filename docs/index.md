@@ -2,19 +2,19 @@
 pageType: home
 
 hero:
-  name: 内部 React
-  text: 通用组件文档站点
-  tagline: 面向多个子应用复用的一套 React 组件资产，覆盖接入方式、API、代码示例与治理建议。
+  name: 内部前端
+  text: 开发文档站点
+  tagline: 汇总跨项目复用的 React 组件、AI 能力、App 原生能力、API 示例与治理规范。
   image:
     src: /home-hero.svg
     alt: React Components Internal Docs
 actions:
   - theme: brand
-    text: 浏览组件文档
+    text: 浏览开发文档
     link: /components/
   - theme: alt
-    text: 查看核心组件
-    link: /components/tables/pro-table
+    text: 查看 JS-Bridge
+    link: /components/js-bridge/
   - theme: alt
     text: 查看治理规划
     link: /overview/component-improvements
@@ -34,11 +34,11 @@ features:
     link: /overview/component-improvements
   - icon: 🧩
     title: 分组浏览清晰
-    details: 组件区按基础能力、表单与输入、表格与筛选、布局与导航、弹窗与预览分组，查找路径更稳定。
+    details: React 组件、AI 和 JS-Bridge 均按职责或能力分类，开发者可以从分组快速定位 API。
     link: /components/
   - icon: 🏗️
     title: 面向多应用复用
-    details: 首页和导航都按通用组件体系设计，不绑定单一业务应用，更适合多个子应用共享同一套文档入口。
+    details: React 组件、AI 和 App 原生能力共用一个开发入口，并在各自页面说明项目边界与适用范围。
   - icon: 📊
     title: 核心组件优先读
     details: 建议优先阅读 ProTable、ProForm、FormUpload、SearchInput 这几类高价值组件，快速掌握这套体系的主干能力。

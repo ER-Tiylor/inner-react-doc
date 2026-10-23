@@ -1,6 +1,6 @@
-# 组件文档
+# 开发文档
 
-组件区按职责分成 6 组，优先建议从 `ProTable`、`ProForm`、`FormUpload`、`SearchInput` 这几类高复用组件开始阅读。
+开发文档包含 React 组件、AI 能力和 JS-Bridge。React 组件按职责分组，优先建议从 `ProTable`、`ProForm`、`FormUpload`、`SearchInput` 这几类高复用组件开始阅读。
 
 ## 分组导航
 
@@ -45,6 +45,17 @@
 - [原子能力与 API](/components/ai/atomic-capabilities)
 - [场景组合与示例](/components/ai/scenarios)
 - [联调与排障](/components/ai/troubleshooting)
+
+### JS-Bridge
+
+- [接入与能力总览](/components/js-bridge/)
+- [就绪、异步与错误](/components/js-bridge/bridge-errors)
+- [应用、WebView 与交互](/components/js-bridge/app-container-ui)
+- [存储与系统](/components/js-bridge/storage-system)
+- [定位、地图与扫码](/components/js-bridge/location-maps-scanner)
+- [图片与文件](/components/js-bridge/media-files)
+- [OCR 识别](/components/js-bridge/recognition)
+- [网络与事件](/components/js-bridge/network-events)
 
 ## 命名说明
 

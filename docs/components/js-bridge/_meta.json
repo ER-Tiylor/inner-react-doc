@@ -1,0 +1,10 @@
+[
+  { "type": "file", "name": "index", "label": "接入与能力总览" },
+  { "type": "file", "name": "bridge-errors", "label": "就绪、异步与错误" },
+  { "type": "file", "name": "app-container-ui", "label": "应用、WebView 与交互" },
+  { "type": "file", "name": "storage-system", "label": "存储与系统" },
+  { "type": "file", "name": "location-maps-scanner", "label": "定位、地图与扫码" },
+  { "type": "file", "name": "media-files", "label": "图片与文件" },
+  { "type": "file", "name": "recognition", "label": "OCR 识别" },
+  { "type": "file", "name": "network-events", "label": "网络与事件" }
+]

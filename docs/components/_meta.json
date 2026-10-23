@@ -28,5 +28,10 @@
     "type": "dir-section-header",
     "name": "ai",
     "label": "AI"
+  },
+  {
+    "type": "dir-section-header",
+    "name": "js-bridge",
+    "label": "JS-Bridge"
   }
 ]
