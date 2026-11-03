@@ -9,8 +9,8 @@ JS-Bridge 为运行在 App WebView 中的 H5 页面提供原生能力。业务�
 | 项 | 版本 / 说明 |
 | --- | --- |
 | JS 封装 | `sf-bridge@1.2.0-beta.1` + 项目内 `src/utils/js-bridge` |
-| Android 壳 | 河北交投货主 `1.0.1`（`com.sfic.hbjthuozhu`） |
-| iOS 壳 | 河北交投货主 `1.0.0`（`com.sfic.hbjthuozhu`） |
+| Android 壳 | ≥ 1.0.1 |
+| iOS 壳 | ≥ 1.0.0 |
 | iOS 原生 Bridge | `lib-ios-webplugin218 2.1.3` |
 | Android 原生 Bridge | `lib-android-websdk`（随壳工程版本） |
 
