@@ -25,7 +25,7 @@ const { latitude, longitude } = await native.location.getCurrentPosition();
 
 ## `native.map.openNavigation()`
 
-**功能行为：** 将目的地坐标交给设备上的地图应用并拉起导航。用户会进入外部地图界面；该 API 不在 H5 内绘制地图，也不持续返回导航进度。
+**功能行为：** 将目的地坐标交给设备上的地图应用并拉起导航。Android 和 iOS 都提供**高德地图 / 百度地图**两个选项，以驾车模式打开；未安装对应地图时提示并引导下载。用户会进入外部地图界面；该 API 不在 H5 内绘制地图，也不持续返回导航进度。
 
 ```ts
 openNavigation(options: {

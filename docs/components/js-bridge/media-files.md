@@ -4,11 +4,11 @@
 
 | API | 功能行为 | 返回形式 | 状态 |
 | --- | --- | --- | --- |
-| `native.media.saveImageToAlbum()` | 将 Base64 图片保存到系统相册 | `Promise<void>` | 待验证 |
-| `native.media.chooseAndUploadImages()` | 从相册或相机选择图片并上传 | `Promise<{images:Array}>` | 待验证 |
-| `native.file.chooseAndUploadFiles()` | 从系统文件选择器选取文件并上传 | `Promise<{files:Array}>` | 已验证 |
-| `native.file.previewPdf()` | 在 App 内打开原生 PDF 分页预览 | `Promise<{cacheHit,fileSize}>` | 已实现，待真机验证 |
-| `native.file.clearPdfCache()` | 清空全部 PDF 缓存 | `Promise<{deletedFiles,freedBytes}>` | 已实现，待真机验证 |
+| `native.media.saveImageToAlbum()` | 将 Base64 图片保存到系统相册 | `Promise<void>` | 已实现（双端，待真机回归） |
+| `native.media.chooseAndUploadImages()` | 从相册或相机选择图片并上传 | `Promise<{images:Array}>` | 已实现（双端，待真机回归） |
+| `native.file.chooseAndUploadFiles()` | 从系统文件选择器选取文件并上传 | `Promise<{files:Array}>` | 已实现（双端） |
+| `native.file.previewPdf()` | 在 App 内打开原生 PDF 分页预览 | `Promise<{cacheHit,fileSize}>` | 已实现（双端，待真机回归） |
+| `native.file.clearPdfCache()` | 清空全部 PDF 缓存 | `Promise<{deletedFiles,freedBytes}>` | 已实现（双端） |
 
 宿主上传适配器负责注入认证信息，业务页面不应自行拼接宿主认证字段。
 
@@ -75,7 +75,7 @@ Promise resolve 表示文件已经上传并得到标准化结果。用户未选�
 
 **功能行为：** 下载一个可访问的 PDF 地址，并在 App 内打开原生只读预览页。预览页支持左右分页、当前页码、双指缩放、放大后拖动和双击切换缩放倍率。它适合合同、回执、单据和附件等只读预览场景。
 
-当前 Android 宿主使用系统 `PdfRenderer` 渲染，不引入独立 PDF 引擎。文件只写入应用私有缓存，不申请外部存储权限，也不会把 Android 文件路径返回给 H5。
+Android 宿主使用系统 `PdfRenderer` 渲染；iOS 使用系统内置的 `PDFKit`（`PDFView`），支持双指缩放、放大后拖动、横向翻页、页码和双击缩放。两端都不引入第三方 PDF 引擎。文件只写入应用私有缓存，不申请外部存储权限，也不会把本地文件路径返回给 H5。
 
 ```ts
 previewPdf(options: {

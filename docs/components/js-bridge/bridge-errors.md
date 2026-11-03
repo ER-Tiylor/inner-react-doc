@@ -104,6 +104,8 @@ interface NativeBridgeError extends Error {
 | `INVALID_PDF` | 内容不是有效 PDF，或 PDF 损坏、加密而无法打开 |
 | `NATIVE_ERROR` | 无法进一步分类的原生错误 |
 
+Android 与 iOS 使用同一套错误码和 Promise 语义；业务代码按 `error.code` 判断，不要依赖具体平台的错误文案。
+
 ```js
 import { native, isNativeBridgeError, NATIVE_ERROR_CODE } from '@/utils/js-bridge';
 

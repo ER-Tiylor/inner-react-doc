@@ -4,12 +4,12 @@
 
 | API | 功能行为 | 返回形式 | 状态 |
 | --- | --- | --- | --- |
-| `native.app.exitApp()` | 结束当前 App 任务中的页面 | `Promise<void>` | 已实现 |
+| `native.app.exitApp()` | 结束当前 App 任务中的页面 | `Promise<void>` | 已实现（iOS 无操作） |
 | `native.browser.open()` | 用外部浏览器打开网址 | `Promise<void>` | 已实现 |
 | `native.webview.close()` | 关闭当前原生 WebView 页面 | `Promise<void>` | 已实现 |
 | `native.ui.showConfirm()` | 显示原生双按钮确认框 | `Promise<{confirmed:boolean}>` | 已实现 |
 | `native.ui.showToast()` | 显示短时原生提示 | `Promise<void>` | 已实现 |
-| `native.device.getInfo()` | 读取非敏感设备摘要 | `Promise<DeviceInfo>` | 已实现 |
+| `native.device.getInfo()` | 读取非敏感设备摘要 | `Promise<DeviceInfo>` | 已实现（H5 层兜底） |
 | `native.device.makePhoneCall()` | 拉起系统拨号流程 | `Promise<void>` | 已实现 |
 
 ## `native.app.exitApp()`
@@ -25,6 +25,8 @@ await native.app.exitApp();
 ```
 
 Promise resolve 表示退出指令已派发。调用后的页面逻辑不应再依赖继续执行。
+
+> **平台差异**：Android 会结束当前任务栈；iOS 按 Apple 规范不提供程序化退出 App 的能力，调用会正常 resolve，但 App 不会退出。H5 不应把“退出 App”作为唯一兜底路径。
 
 ## `native.browser.open()`
 
@@ -53,6 +55,8 @@ await native.webview.close();
 ```
 
 Promise resolve 表示关闭指令已派发；页面关闭后的异步任务不保证继续执行。
+
+> **平台行为**：Android 的系统返回手势/返回键会优先执行 `webView.goBack()`；iOS 开启了 WKWebView 自带的左边缘滑动返回，有 WebView 历史时交互式返回，没有历史时手势不响应。
 
 ## `native.ui.showConfirm()`
 
@@ -118,6 +122,9 @@ console.log(device.os, device.systemVersion, device.model);
 ```
 
 字段是否有值取决于宿主和系统版本，业务代码应允许字段为空。
+
+> **实现说明**：Android 和 iOS 壳注入的桥接 JS 目前都没有提供 `window.SFApp.device.getDeviceInfo`，因此 H5 封装层改用 `uni.getSystemInfoSync()` 兜底，两端都可正常返回。
+> `os`、`systemVersion`、`screen` 准确；`model` 在 Android 上通常准确，iOS 的 UA 不含具体机型，只能得到 `iPhone` / `iPad` 这类泛化值。需要精准机型时再改回原生实现。
 
 ## `native.device.makePhoneCall()`
 

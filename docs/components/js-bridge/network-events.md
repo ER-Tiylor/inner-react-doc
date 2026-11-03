@@ -27,6 +27,8 @@ const result = await native.http.request({
 
 `url` 必须是非空字符串。当前只支持 GET 和 POST；其他方法抛出 `UNSUPPORTED`，不会静默退化成 GET。认证信息由宿主网络适配器按配置注入。Promise resolve 表示请求成功并得到响应数据，网络代理失败时抛出 `NETWORK_ERROR`。
 
+Android 与 iOS 走同一个 `sendRequest` 协议：`httpMethod` 区分 GET/POST，成功条件为原生返回有效状态且 HTTP 状态码为 `200`，响应体按 JSON 解析。
+
 ## Events
 
 Events 用于接收 Native 在未来某个时间主动推送的数据，例如宿主状态变化或跨页面通知。一次订阅的回调可以执行多次，页面销毁时必须释放订阅。
