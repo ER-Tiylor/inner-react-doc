@@ -21,6 +21,11 @@
   },
   {
     "type": "file",
+    "name": "ui-ux",
+    "label": "UI 与用户体验规范"
+  },
+  {
+    "type": "file",
     "name": "troubleshooting",
     "label": "联调与排障"
   }

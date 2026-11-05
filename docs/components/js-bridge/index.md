@@ -15,6 +15,8 @@ JS-Bridge 为运行在 App WebView 中的 H5 页面提供原生能力。业务�
 | Android 原生 Bridge | `lib-android-websdk`（随壳工程版本） |
 
 > 能力由 App 壳实现，不在 H5 包内。低于上述版本的壳可能不支持本文列出的全部能力；调用未知 action 会返回 `UNSUPPORTED` 或 `NATIVE_ERROR`。
+>
+> `native.webview.clearCookie()` 与 `native.webview.restart()` 需要包含本次改动的壳版本；更早的壳可能返回 `UNSUPPORTED`，也可能不回调直至超时。
 
 ### 平台差异
 

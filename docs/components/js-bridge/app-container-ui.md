@@ -7,6 +7,8 @@
 | `native.app.exitApp()` | 结束当前 App 任务中的页面 | `Promise<void>` | 已实现（iOS 无操作） |
 | `native.browser.open()` | 用外部浏览器打开网址 | `Promise<void>` | 已实现 |
 | `native.webview.close()` | 关闭当前原生 WebView 页面 | `Promise<void>` | 已实现 |
+| `native.webview.clearCookie()` | 清空原生 Cookie 存储 | `Promise<void>` | 已实现 |
+| `native.webview.restart()` | 丢弃当前页面与历史，重新加载 H5 入口页 | `Promise<void>` | 已实现 |
 | `native.ui.showConfirm()` | 显示原生双按钮确认框 | `Promise<{confirmed:boolean}>` | 已实现 |
 | `native.ui.showToast()` | 显示短时原生提示 | `Promise<void>` | 已实现 |
 | `native.device.getInfo()` | 读取非敏感设备摘要 | `Promise<DeviceInfo>` | 已实现（H5 层兜底） |
@@ -57,6 +59,38 @@ await native.webview.close();
 Promise resolve 表示关闭指令已派发；页面关闭后的异步任务不保证继续执行。
 
 > **平台行为**：Android 的系统返回手势/返回键会优先执行 `webView.goBack()`；iOS 开启了 WKWebView 自带的左边缘滑动返回，有 WebView 历史时交互式返回，没有历史时手势不响应。
+
+## `native.webview.clearCookie()`
+
+**功能行为：** 清空原生代发请求使用的 Cookie 存储。H5 退出登录时清理 localStorage 和 H5 侧 Cookie，并不会清掉原生存储；旧登录态会被之后的原生请求继续携带。Android 清理 `CookieManager`，iOS 同时清理 `HTTPCookieStorage` 和 WKWebView 的 Cookie 存储。
+
+```ts
+clearCookie(): Promise<void>
+```
+
+```js
+await native.webview.clearCookie();
+```
+
+Promise resolve 表示 Cookie 已经清空。该操作不跳转、不重载页面，也不清理 localStorage；H5 自己的登录态存储仍需由业务代码清理。
+
+## `native.webview.restart()`
+
+**功能行为：** 丢弃当前 WebView 的页面与历史，重新加载 H5 入口页。用于退出登录等需要把路由栈彻底清空的场景：`uni.reLaunch` 只能重置 uni-app 页面栈，清不掉 WebView 历史，用户仍可通过系统返回手势回到旧页面。调用后 H5 会从入口页重新启动，入口页再按业务状态路由（例如无登录态时进入登录页）。
+
+```ts
+restart(): Promise<void>
+```
+
+```js
+// 退出登录：先清原生 Cookie，再重启 WebView
+await native.webview.clearCookie();
+native.webview.restart();
+```
+
+Promise resolve 只表示重启指令已派发。它属于终端操作：调用后当前页面会被重新加载，不要在其后继续执行 JS 或依赖未完成的异步任务。`restart()` 不清除 Cookie，需要清理登录态时先调用 `clearCookie()`。
+
+> **实现说明**：Android 先 `clearHistory()`，再重新加载插件入口；iOS 没有 `clearHistory()` 公开 API，会重建一个 `WKWebView`（复用同一份配置，Bridge、Web 存储均延续）后加载入口页。两端对 H5 的可观察行为一致：页面回到入口、历史为空、返回手势可用。
 
 ## `native.ui.showConfirm()`
 
