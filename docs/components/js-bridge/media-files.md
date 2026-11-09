@@ -7,6 +7,7 @@
 | `native.media.saveImageToAlbum()` | 将 Base64 图片保存到系统相册 | `Promise<void>` | 已实现（双端，待真机回归） |
 | `native.media.chooseAndUploadImages()` | 从相册或相机选择图片并上传 | `Promise<{images:Array}>` | 已实现（双端，待真机回归） |
 | `native.file.chooseAndUploadFiles()` | 从系统文件选择器选取文件并上传 | `Promise<{files:Array}>` | 已实现（双端） |
+| `native.file.uploadBase64File()` | 上传 Base64 内容，适合手写签名等无本地路径的场景 | `Promise<UploadedFile>` | 已实现（双端，待真机回归） |
 | `native.file.previewPdf()` | 在 App 内打开原生 PDF 分页预览 | `Promise<{cacheHit,fileSize}>` | 已实现（双端，待真机回归） |
 | `native.file.clearPdfCache()` | 清空全部 PDF 缓存 | `Promise<{deletedFiles,freedBytes}>` | 已实现（双端） |
 
@@ -70,6 +71,45 @@ try {
 ```
 
 Promise resolve 表示文件已经上传并得到标准化结果。用户未选择就退出时抛出 `USER_CANCELLED`，读取或上传失败时 Promise 会 reject 对应错误。
+
+## `native.file.uploadBase64File()`
+
+**功能行为：** 上传 H5 已经生成的 Base64 内容，典型场景是 `canvas` 导出的手写签名、图表截图等没有本地文件路径的图片。Native 负责解码、写入临时文件、申请预签名地址并完成上传，因此不受 WebView 以 `file://` 加载时的跨域限制；业务页面不需要自行请求上传地址，也不需要执行 PUT。整个过程没有系统界面和用户交互。
+
+```ts
+uploadBase64File(options: {
+  data: string;
+  fileName: string;
+  mimeType?: string;
+  bucketType?: number;
+}): Promise<UploadedFile>;
+```
+
+| 参数 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `data` | `string` | 是 | 纯 Base64 或 data URL（`data:image/png;base64,...`），兼容 URL-safe 编码 |
+| `fileName` | `string` | 是 | 带后缀的文件名，如 `signature_1720000000.png`；Native 会去掉路径和非法字符 |
+| `mimeType` | `string` | 否 | `fileName` 不含后缀时用于补全，如 `image/png` |
+| `bucketType` | `number` | 否 | `1` 私有桶、`2` 公有桶，默认 `2` |
+
+```js
+import { native } from '@/utils/js-bridge';
+
+// canvasBase64 可以是 'data:image/png;base64,...'，也可以是纯 Base64
+const file = await native.file.uploadBase64File({
+  data: canvasBase64,
+  fileName: `signature_${Date.now()}.png`,
+  mimeType: 'image/png',
+});
+
+params.signature = file.objectName; // 提交表单时保存稳定的服务端标识
+```
+
+`bucketType` 默认使用公有桶（`2`），返回的 `tempURL` 可以直接预览；如果所选存储桶策略要求私有桶，显式传入 `1`，后续预览需要先向后端换取临时地址。
+
+Promise resolve 表示文件已经上传成功，返回值是单个 `UploadedFile`，不会像图片、文件选择上传那样再包一层 `images` 或 `files`。`data` 为空或不是合法 Base64 时抛出 `INVALID_ARGUMENT`；解码后超过 5 MB 时抛出 `FILE_TOO_LARGE`；预签名或 PUT 失败时抛出 `NATIVE_ERROR`。
+
+该 API 没有用户交互，不受 `BUSY` 限制，可以并发调用；手写签名等小文件不需要展示上传进度。
 
 ## `native.file.previewPdf()`
 
@@ -184,7 +224,7 @@ console.log(`已删除 ${result.deletedFiles} 个文件，释放 ${result.freedB
 
 ## 上传结果
 
-图片结果位于 `images`，文件结果位于 `files`。每个上传项至少包含以下公共字段：
+图片结果位于 `images`，文件结果位于 `files`；`native.file.uploadBase64File()` 直接返回单个上传项。每个上传项至少包含以下公共字段：
 
 ```ts
 interface UploadedFile {

@@ -17,6 +17,8 @@ JS-Bridge 为运行在 App WebView 中的 H5 页面提供原生能力。业务�
 > 能力由 App 壳实现，不在 H5 包内。低于上述版本的壳可能不支持本文列出的全部能力；调用未知 action 会返回 `UNSUPPORTED` 或 `NATIVE_ERROR`。
 >
 > `native.webview.clearCookie()` 与 `native.webview.restart()` 需要包含本次改动的壳版本；更早的壳可能返回 `UNSUPPORTED`，也可能不回调直至超时。
+>
+> `native.file.uploadBase64File()` 同样需要包含本次改动的壳版本，更早的壳会返回 `UNSUPPORTED`。
 
 ### 平台差异
 
@@ -41,7 +43,7 @@ JS-Bridge 为运行在 App WebView 中的 H5 页面提供原生能力。业务�
 | [应用、WebView 与交互](./app-container-ui) | 退出应用、关闭页面、外部浏览器、弹窗、Toast、拨号 |
 | [存储与系统](./storage-system) | 持久化数据、通知状态、系统设置 |
 | [定位、地图与扫码](./location-maps-scanner) | 单次定位、外部导航、二维码扫描 |
-| [图片与文件](./media-files) | 保存图片、选择并上传图片或文件、原生预览 PDF |
+| [图片与文件](./media-files) | 保存图片、选择并上传图片或文件、Base64 上传、原生预览 PDF |
 | [OCR 识别](./recognition) | 证件类型约定与 OCR 占位能力 |
 | [网络与事件](./network-events) | 原生网络代理、持续事件订阅 |
 
